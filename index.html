@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>KittenStore</title>
+  <!-- Onsen UI Stylesheet -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/onsenui/css/onsenui.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/onsenui/css/onsen-css-components.css">
+  <!-- Material Icons -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+  <script>
+    if('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('/sw.js')
+        .then(() => console.log("Service Worker Registered"))
+        .catch(e => console.log(e));
+    }
+  </script>
+  <link rel="manifest" href="/manifest.json">
+  <link rel="icon" type="image/png" href="https://raw.githubusercontent.com/CodingKitten-YT/KittenStore/main/250icon.png" />
+</head>
+<body>
+  <!-- Navigator to handle page transitions -->
+  <ons-navigator id="appNavigator" swipeable swipe-target-width="80px">
+    <ons-page>
+      <ons-splitter id="appSplitter">
+        <ons-splitter-content page="tabbar.html"></ons-splitter-content>
+      </ons-splitter>
+    </ons-page>
+  </ons-navigator>
+
+  <!-- Tab bar template -->
+  <template id="tabbar.html">
+    <ons-page id="tabbar-page">
+      <ons-toolbar>
+        <div class="center">Home</div>
+      </ons-toolbar>
+      <ons-tabbar swipeable id="appTabbar" position="auto">
+        <ons-tab label="Home" icon="md-home" page="home.html" active></ons-tab>
+        <ons-tab label="Info" icon="md-info" page="info.html"></ons-tab>
+      </ons-tabbar>
+
+      <script>
+        // Update the toolbar title based on the selected tab
+        ons.getScriptPage().addEventListener('prechange', function(event) {
+          if (event.target.matches('#appTabbar')) {
+            event.currentTarget.querySelector('ons-toolbar .center').innerHTML = event.tabItem.getAttribute('label');
+          }
+        });
+      </script>
+    </ons-page>
+  </template>
+
+  <!-- Home page template -->
+  <template id="home.html">
+    <ons-page>
+      <div class="search-bar-wrapper">
+        <ons-search-input id="searchInput" placeholder="Search apps..."></ons-search-input>
+      </div>
+  
+      <div id="app-list" class="app-list"></div>
+  
+      <script>
+        document.addEventListener('init', function() {
+          fetchApps();
+        });
+  
+        async function fetchApps() {
+          try {
+            const response = await fetch('https://raw.githubusercontent.com/swaggyP36000/TrollStore-IPAs/main/apps.json');
+            if (!response.ok) {
+              throw new Error('Network response was not ok');
+            }
+            const data = await response.json();
+  
+            const appList = document.getElementById('app-list');
+            appList.innerHTML = '';
+  
+            window.apps = data.apps;
+  
+            renderApps(window.apps);
+  
+            document.getElementById('searchInput').addEventListener('input', function(event) {
+              const query = event.target.value.toLowerCase();
+              const filteredApps = window.apps.filter(app => app.name.toLowerCase().includes(query));
+              renderApps(filteredApps);
+            });
+          } catch (error) {
+            console.error('Error fetching app data:', error);
+            const appList = document.getElementById('app-list');
+            appList.innerHTML = '<p>Failed to load apps. Please try again later.</p>';
+          }
+        }
+  
+        function renderApps(apps) {
+          const appList = document.getElementById('app-list');
+          appList.innerHTML = '';
+  
+          apps.forEach(app => {
+            const latestVersion = app.versions[0];
+  
+            const cardHtml = `
+              <ons-card class="app-card">
+                <div class="app-content">
+                  <div class="app-icon">
+                    <img src="${app.iconURL}" alt="${app.name} Icon" 
+                    onerror="this.onerror=null; this.src='https://placehold.co/400x400/000000/FFFFFF/png?text=No%5CnIcon&font=roboto';">
+                  </div>
+                  <div class="app-details">
+                    <div class="app-title">${truncateTitle(app.name)}</div>
+                    <div class="app-version">v${latestVersion.version}</div>
+                  </div>
+                </div>
+                <div class="install-button-wrapper">
+                  <ons-button class="install-button" id="push-button" onclick="showInstallOptions('${app.name}', '${app.iconURL}', '${app.description}', '${latestVersion.downloadURL}')">Install</ons-button>
+                </div>
+              </ons-card>
+            `;
+  
+            appList.insertAdjacentHTML('beforeend', cardHtml);
+          });
+        }
+  
+        function truncateTitle(title) {
+          return title.length > 17 ? title.substring(0, 17) + '...' : title;
+        }
+  
+        function showInstallOptions(appName, iconURL, description, downloadURL) {
+          document.querySelector('#appNavigator').pushPage('page2.html', {
+            data: { appName, iconURL, description, downloadURL }
+          });
+        }
+      </script>
+
+      <style>
+        .search-bar-wrapper {
+          display: flex;
+          justify-content: center;
+          padding: 10px;
+        }
+
+        #searchInput {
+          width: 80%;
+          max-width: 400px;
+        }
+
+        .app-list {
+          padding: 10px;
+          box-sizing: border-box;
+        }
+
+        .app-card {
+          margin-bottom: 10px;
+          box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+          overflow: hidden;
+          position: relative;
+          width: 100%;
+          display: flex;
+          align-items: center;
+          padding: 0;
+          box-sizing: border-box;
+        }
+
+        .app-content {
+          display: flex;
+          align-items: center;
+          width: 100%;
+          padding: 10px;
+          box-sizing: border-box;
+        }
+
+        .app-icon {
+          flex: 0 0 60px;
+          margin-right: 10px;
+        }
+
+        .app-icon img {
+          width: 100%;
+          height: auto;
+          display: block;
+          border-radius: 8px;
+          border: 1px solid #ddd;
+        }
+
+        .app-details {
+          flex: 1;
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+        }
+
+        .app-title {
+          font-size: 16px;
+          font-weight: bold;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+          max-width: calc(100% - 80px);
+        }
+
+        .app-version {
+          font-size: 14px;
+          color: #888;
+          margin-top: 4px;
+        }
+
+        .install-button-wrapper {
+          position: absolute;
+          right: 10px;
+          top: 50%;
+          transform: translateY(-50%);
+        }
+
+        .install-button {
+          background-color: #007bff;
+          color: white;
+          border: none;
+          border-radius: 5px;
+          padding: 8px 16px;
+          font-size: 14px;
+          font-weight: bold;
+          box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+          transition: background-color 0.3s, transform 0.2s;
+          white-space: nowrap;
+        }
+
+        .install-button:focus {
+          outline: none;
+        }
+
+        .install-button:hover {
+          background-color: #0056b3;
+          transform: scale(1.05);
+        }
+
+        .install-button:active {
+          background-color: #004494;
+        }
+      </style>
+    </ons-page>
+  </template>
+  
+
+  <!-- Info page template -->
+  <template id="info.html">
+    <ons-page>
+      <div class="credits-header">
+        <p class="intro">Trouble shooting:</p>
+      </div>
+      
+      <p class="limited-width">Please ensure you have URL Scheme enabled when trying to install apps with trollstore. It is under the security section in your trollstore app.</p>
+      <img src="https://raw.githubusercontent.com/CodingKitten-YT/KittenStore/main/IMG_0006.jpeg" alt="Screenshot" class="centered-image">
+      <br>
+      <div class="credits-header">
+        <p class="intro">Resources used for this project:</p>
+      </div>
+
+      <div class="credits-list">
+        <ons-card class="credit-card" onclick="location.href='https://onsen.io';">
+          <div class="card-content">
+            <div class="card-title">Onsen UI</div>
+            <div class="card-description">The most beautiful and efficient way to develop HTML5 hybrid and mobile web apps.</div>
+          </div>
+        </ons-card>
+
+        <ons-card class="credit-card" onclick="location.href='https://github.com/swaggyP36000/TrollStore-IPAs';">
+          <div class="card-content">
+            <div class="card-title">Trollstore IPA's</div>
+            <div class="card-description">A collection from many different sources, for TrollStore!</div>
+          </div>
+        </ons-card>
+
+        <div class="credits-header">
+          <p class="intro">Disclaimer:</p>
+        </div>
+        <p class="limited-width">I did not make any of these apps and i am not responsible for any use of them. I do not host any of these ipa files, this project is just for displaying them kinda like a search engine. I do not endorce piracy. If you have any complaints please contact me on discord: codingkitten</p>
+      </div>
+
+      <style>
+        .credits-header {
+          text-align: center;
+          padding: 20px;
+        }
+
+        .intro {
+          font-size: 18px;
+          font-weight: bold;
+          color: #333;
+          margin: 0;
+        }
+
+        .credits-list {
+          padding: 10px;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+        }
+
+        .credit-card {
+          width: 90%;
+          max-width: 500px;
+          margin-bottom: 15px;
+          box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+          border-radius: 8px;
+          overflow: hidden;
+        }
+
+        .card-content {
+          padding: 15px;
+        }
+
+        .card-title {
+          font-size: 20px;
+          font-weight: bold;
+          color: #007bff;
+          margin: 0;
+          text-align: center;
+        }
+
+        .card-description {
+          font-size: 16px;
+          color: #555;
+          margin-top: 5px;
+          text-align: center;
+        }
+
+        .limited-width {
+          max-width: 80%;
+          margin: 0 auto;
+          text-align: center;
+        }
+
+        .centered-image {
+          display: block;
+          margin: 0 auto;
+          max-width: 80%;
+        }
+      </style>
+    </ons-page>
+  </template>
+
+  <!-- App detail page template -->
+  <template id="page2.html">
+    <ons-page id="page2">
+      <ons-toolbar>
+        <div class="left"><ons-back-button>Back</ons-back-button></div>
+        <div class="center">{{ appName }}</div>
+      </ons-toolbar>
+  
+      <div class="app-details-page">
+        <img class="app-icon-large" src="{{ iconURL }}" alt="{{ appName }} Icon">
+  
+        <div class="install-buttons">
+          <ons-button id="trollstore-install">Install with TrollStore</ons-button>
+          <ons-button id="ipa-download">Download IPA</ons-button>
+        </div>
+      </div>
+  
+      <script>
+        document.addEventListener('init', function(event) {
+          const page = event.target;
+  
+          if (page.id === 'page2') {
+            const { appName, iconURL, description, downloadURL } = page.data;
+  
+            page.querySelector('.center').innerText = appName;
+            page.querySelector('.app-icon-large').src = iconURL;
+  
+            page.querySelector('#trollstore-install').onclick = function() {
+              const trollStoreURL = `apple-magnifier://install?url=${encodeURIComponent(downloadURL)}`;
+              location.href = trollStoreURL;
+            };
+
+            page.querySelector('#ipa-download').onclick = function() {
+              window.open(downloadURL, '_blank');
+            };
+          }
+        });
+      </script>
+      <style>
+        .app-details-page {
+          text-align: center;
+          padding: 20px;
+        }
+
+        .app-icon-large {
+          width: 150px;
+          height: 150px;
+          border-radius: 20px;
+          border: 2px solid #ddd;
+          margin-bottom: 20px;
+        }
+
+        .app-description {
+          font-size: 16px;
+          color: #555;
+          margin-bottom: 20px;
+        }
+
+        .install-buttons {
+          display: flex;
+          justify-content: center;
+          gap: 10px;
+        }
+
+        .install-buttons ons-button {
+          flex: 1;
+        }
+      </style>
+    </ons-page>
+  </template>
+  <!-- Onsen UI Script -->
+  <script src="https://cdn.jsdelivr.net/npm/onsenui/js/onsenui.min.js"></script>
+</body>
+</html>
