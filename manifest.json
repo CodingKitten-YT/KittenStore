@@ -1,0 +1,17 @@
+{
+    "name": "KittenStore",
+    "short_name": "KittenStore",
+    "start_url": "/",
+    "display": "standalone",
+    "theme_color": "#ef4e2a",
+    "background_color": "#fff",
+    "icons": [{
+      "src": "https://raw.githubusercontent.com/CodingKitten-YT/KittenStore/main/250icon.png",
+      "sizes": "250x250",
+      "type": "image/png"
+    },{
+      "src": "https://raw.githubusercontent.com/CodingKitten-YT/KittenStore/main/500icon.png",
+      "sizes": "500x500",
+      "type": "image/png"
+    }]
+  }
