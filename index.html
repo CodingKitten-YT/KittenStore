@@ -9,6 +9,8 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/onsenui/css/onsen-css-components.css">
   <!-- Material Icons -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+  <!-- External Stylesheet -->
+  <link rel="stylesheet" href="styling.css">
   <script>
     if('serviceWorker' in navigator) {
       navigator.serviceWorker.register('/sw.js')
@@ -18,6 +20,7 @@
   </script>
   <link rel="manifest" href="/manifest.json">
   <link rel="icon" type="image/png" href="https://raw.githubusercontent.com/CodingKitten-YT/KittenStore/main/250icon.png" />
+  <script src="https://cdn.jsdelivr.net/npm/onsenui/js/onsenui.min.js"></script>
 </head>
 <body>
   <!-- Navigator to handle page transitions -->
@@ -55,7 +58,7 @@
   <template id="home.html">
     <ons-page>
       <div class="search-bar-wrapper">
-        <ons-search-input id="searchInput" placeholder="Search apps..."></ons-search-input>
+        <ons-search-input id="searchInput" placeholder="Search apps..." aria-label="Search apps"></ons-search-input>
       </div>
   
       <div id="app-list" class="app-list"></div>
@@ -98,7 +101,7 @@
   
           apps.forEach(app => {
             const latestVersion = app.versions[0];
-  
+
             const cardHtml = `
               <ons-card class="app-card">
                 <div class="app-content">
@@ -112,11 +115,11 @@
                   </div>
                 </div>
                 <div class="install-button-wrapper">
-                  <ons-button class="install-button" id="push-button" onclick="showInstallOptions('${app.name}', '${app.iconURL}', '${app.description}', '${latestVersion.downloadURL}')">Install</ons-button>
+                  <ons-button class="install-button" id="push-button" onclick="showInstallOptions('${app.name}')" aria-label="Install ${app.name}">Install</ons-button>
                 </div>
               </ons-card>
             `;
-  
+
             appList.insertAdjacentHTML('beforeend', cardHtml);
           });
         }
@@ -125,121 +128,14 @@
           return title.length > 17 ? title.substring(0, 17) + '...' : title;
         }
   
-        function showInstallOptions(appName, iconURL, description, downloadURL) {
+        function showInstallOptions(appName) {
           document.querySelector('#appNavigator').pushPage('page2.html', {
-            data: { appName, iconURL, description, downloadURL }
+            data: { appName }
           });
         }
       </script>
-
-      <style>
-        .search-bar-wrapper {
-          display: flex;
-          justify-content: center;
-          padding: 10px;
-        }
-
-        #searchInput {
-          width: 80%;
-          max-width: 400px;
-        }
-
-        .app-list {
-          padding: 10px;
-          box-sizing: border-box;
-        }
-
-        .app-card {
-          margin-bottom: 10px;
-          box-shadow: 0 2px 4px rgba(0,0,0,0.2);
-          overflow: hidden;
-          position: relative;
-          width: 100%;
-          display: flex;
-          align-items: center;
-          padding: 0;
-          box-sizing: border-box;
-        }
-
-        .app-content {
-          display: flex;
-          align-items: center;
-          width: 100%;
-          padding: 10px;
-          box-sizing: border-box;
-        }
-
-        .app-icon {
-          flex: 0 0 60px;
-          margin-right: 10px;
-        }
-
-        .app-icon img {
-          width: 100%;
-          height: auto;
-          display: block;
-          border-radius: 8px;
-          border: 1px solid #ddd;
-        }
-
-        .app-details {
-          flex: 1;
-          display: flex;
-          flex-direction: column;
-          justify-content: center;
-        }
-
-        .app-title {
-          font-size: 16px;
-          font-weight: bold;
-          overflow: hidden;
-          text-overflow: ellipsis;
-          white-space: nowrap;
-          max-width: calc(100% - 80px);
-        }
-
-        .app-version {
-          font-size: 14px;
-          color: #888;
-          margin-top: 4px;
-        }
-
-        .install-button-wrapper {
-          position: absolute;
-          right: 10px;
-          top: 50%;
-          transform: translateY(-50%);
-        }
-
-        .install-button {
-          background-color: #007bff;
-          color: white;
-          border: none;
-          border-radius: 5px;
-          padding: 8px 16px;
-          font-size: 14px;
-          font-weight: bold;
-          box-shadow: 0 2px 4px rgba(0,0,0,0.2);
-          transition: background-color 0.3s, transform 0.2s;
-          white-space: nowrap;
-        }
-
-        .install-button:focus {
-          outline: none;
-        }
-
-        .install-button:hover {
-          background-color: #0056b3;
-          transform: scale(1.05);
-        }
-
-        .install-button:active {
-          background-color: #004494;
-        }
-      </style>
     </ons-page>
   </template>
-  
 
   <!-- Info page template -->
   <template id="info.html">
@@ -254,7 +150,7 @@
       <div class="credits-header">
         <p class="intro">Resources used for this project:</p>
       </div>
-
+  
       <div class="credits-list">
         <ons-card class="credit-card" onclick="location.href='https://onsen.io';">
           <div class="card-content">
@@ -262,82 +158,35 @@
             <div class="card-description">The most beautiful and efficient way to develop HTML5 hybrid and mobile web apps.</div>
           </div>
         </ons-card>
-
+  
         <ons-card class="credit-card" onclick="location.href='https://github.com/swaggyP36000/TrollStore-IPAs';">
           <div class="card-content">
             <div class="card-title">Trollstore IPA's</div>
             <div class="card-description">A collection from many different sources, for TrollStore!</div>
           </div>
         </ons-card>
-
+  
         <div class="credits-header">
           <p class="intro">Disclaimer:</p>
         </div>
         <p class="limited-width">I did not make any of these apps and i am not responsible for any use of them. I do not host any of these ipa files, this project is just for displaying them kinda like a search engine. I do not endorce piracy. If you have any complaints please contact me on discord: codingkitten</p>
+  
+        <div class="credits-header">
+          <p class="intro">Emoji Guide for App Selection (Status):</p>
+        </div>
+        <p class="limited-width">
+          ✅ Indicates that an app is working or up-to-date.<br>
+          ❌ Indicates that an app is either discontinued or not working.<br>
+          ⚠️ Indicates that an app is outdated but still functional.<br>
+          ❔ Indicates that the app's original source is inaccessible or has not been tested and its functionality is uncertain.<br>
+          👍 Indicates that an app or tweak is considered better than another one from the repo. (Example: Paperback > Aidoku)<br>
+          ⭐ Indicates that an app fully supports Widgets.<br>
+          💡 Indicates that an app contains a hand-made tutorial. (Linked in its description)<br>
+        </p>
+        <p class="limited-width">These emojis should assist you in making informed decisions when selecting apps or tweaks from this repository. Please consider the provided emoji guidance when choosing the right application for your needs.</p>
       </div>
-
-      <p class="limited-width">V1.01</p>
-
-      <style>
-        .credits-header {
-          text-align: center;
-          padding: 20px;
-        }
-
-        .intro {
-          font-size: 18px;
-          font-weight: bold;
-          color: #333;
-          margin: 0;
-        }
-
-        .credits-list {
-          padding: 10px;
-          display: flex;
-          flex-direction: column;
-          align-items: center;
-        }
-
-        .credit-card {
-          width: 90%;
-          max-width: 500px;
-          margin-bottom: 15px;
-          box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-          border-radius: 8px;
-          overflow: hidden;
-        }
-
-        .card-content {
-          padding: 15px;
-        }
-
-        .card-title {
-          font-size: 20px;
-          font-weight: bold;
-          color: #007bff;
-          margin: 0;
-          text-align: center;
-        }
-
-        .card-description {
-          font-size: 16px;
-          color: #555;
-          margin-top: 5px;
-          text-align: center;
-        }
-
-        .limited-width {
-          max-width: 80%;
-          margin: 0 auto;
-          text-align: center;
-        }
-
-        .centered-image {
-          display: block;
-          margin: 0 auto;
-          max-width: 80%;
-        }
-      </style>
+  
+      <p class="limited-width">V1.02</p>
     </ons-page>
   </template>
 
@@ -350,65 +199,83 @@
       </ons-toolbar>
   
       <div class="app-details-page">
-        <img class="app-icon-large" src="{{ iconURL }}" alt="{{ appName }} Icon">
+        <img class="app-icon-large" src="" alt="{{ appName }} Icon">
+  
+        <div class="app-description"></div>
+  
+        <div class="app-size"></div>
   
         <div class="install-buttons">
-          <ons-button id="trollstore-install">Install with TrollStore</ons-button>
-          <ons-button id="ipa-download">Download IPA</ons-button>
+          <ons-button id="trollstore-install" aria-label="Install with TrollStore">Install with TrollStore</ons-button>
+          <ons-button id="ipa-download" aria-label="Download IPA">Download IPA</ons-button>
         </div>
       </div>
   
       <script>
-        document.addEventListener('init', function(event) {
+        document.addEventListener('init', async function(event) {
           const page = event.target;
   
           if (page.id === 'page2') {
-            const { appName, iconURL, description, downloadURL } = page.data;
+            const { appName } = page.data;
   
-            page.querySelector('.center').innerText = appName;
-            page.querySelector('.app-icon-large').src = iconURL;
+            // Fetch the app data based on the appName
+            const app = await fetchAppByName(appName);
+            const latestVersion = app.versions[0];
+  
+            page.querySelector('.center').innerText = app.name;
+            page.querySelector('.app-icon-large').src = app.iconURL;
+  
+            // Remove the specific part from the localizedDescription
+            const cleanedDescription = latestVersion.localizedDescription.replace(/\nLast updated:.*$/m, '').replace(/Status:.*$/m, '');
+  
+            // Calculate the last updated date
+            const lastUpdatedDate = new Date(latestVersion.date);
+            const currentDate = new Date();
+            const diffTime = Math.abs(currentDate - lastUpdatedDate);
+            const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+  
+            // Update the localizedDescription with the last updated date
+            const updatedDescription = `${cleanedDescription}\nLast updated: ${diffDays} days ago`;
+            page.querySelector('.app-description').innerText = updatedDescription;
+  
+            // Append the status separately
+            const statusElement = document.createElement('div');
+            statusElement.className = 'app-status';
+            statusElement.innerText = 'Status: ✅ 👍';
+            page.querySelector('.app-description').appendChild(statusElement);
+  
+            // Display the file size
+            const fileSize = formatFileSize(latestVersion.size);
+            page.querySelector('.app-size').innerText = `File Size: ${fileSize}`;
   
             page.querySelector('#trollstore-install').onclick = function() {
-              const trollStoreURL = `apple-magnifier://install?url=${encodeURIComponent(downloadURL)}`;
+              const trollStoreURL = `apple-magnifier://install?url=${encodeURIComponent(latestVersion.downloadURL)}`;
               location.href = trollStoreURL;
             };
-
+  
             page.querySelector('#ipa-download').onclick = function() {
-              window.open(downloadURL, '_blank');
+              window.open(latestVersion.downloadURL, '_blank');
             };
           }
         });
+  
+        async function fetchAppByName(appName) {
+          const response = await fetch('https://raw.githubusercontent.com/swaggyP36000/TrollStore-IPAs/main/apps.json');
+          if (!response.ok) {
+            throw new Error('Network response was not ok');
+          }
+          const data = await response.json();
+          return data.apps.find(app => app.name === appName);
+        }
+  
+        function formatFileSize(bytes) {
+          if (bytes === 0) return '0 Bytes';
+          const k = 1024;
+          const sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB'];
+          const i = Math.floor(Math.log(bytes) / Math.log(k));
+          return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+        }
       </script>
-      <style>
-        .app-details-page {
-          text-align: center;
-          padding: 20px;
-        }
-
-        .app-icon-large {
-          width: 150px;
-          height: 150px;
-          border-radius: 20px;
-          border: 2px solid #ddd;
-          margin-bottom: 20px;
-        }
-
-        .app-description {
-          font-size: 16px;
-          color: #555;
-          margin-bottom: 20px;
-        }
-
-        .install-buttons {
-          display: flex;
-          justify-content: center;
-          gap: 10px;
-        }
-
-        .install-buttons ons-button {
-          flex: 1;
-        }
-      </style>
     </ons-page>
   </template>
   <!-- Onsen UI Script -->
