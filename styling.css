@@ -1,193 +1,310 @@
+/* Modern Color Scheme */
+:root {
+  --primary-color: #6200EE;
+  --secondary-color: #03DAC6;
+  --accent-color: #FF5722;
+  --background-color: #F5F5F5;
+  --text-color: #333;
+}
+
+/* Modern Font Family */
+body {
+  font-family: 'Roboto', sans-serif;
+  background-color: var(--background-color);
+  color: var(--text-color);
+}
+
 .search-bar-wrapper {
-    display: flex;
-    justify-content: center;
-    padding: 10px;
-  }
-  
-  #searchInput {
-    width: 80%;
-    max-width: 400px;
-  }
-  
-  .app-list {
-    padding: 10px;
-    box-sizing: border-box;
-  }
-  
-  .app-card {
-    margin-bottom: 10px;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
-    overflow: hidden;
-    position: relative;
-    width: 100%;
-    display: flex;
-    align-items: center;
-    padding: 0;
-    box-sizing: border-box;
-  }
-  
-  .app-content {
-    display: flex;
-    align-items: center;
-    width: 100%;
-    padding: 10px;
-    box-sizing: border-box;
-  }
-  
-  .app-icon {
-    flex: 0 0 60px;
-    margin-right: 10px;
-  }
-  
-  .app-icon img {
-    width: 100%;
-    height: auto;
-    display: block;
-    border-radius: 8px;
-    border: 1px solid #ddd;
-  }
-  
-  .app-details {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-  }
-  
-  .app-title {
-    font-size: 16px;
-    font-weight: bold;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    max-width: calc(100% - 80px);
-  }
-  
-  .app-version {
-    font-size: 14px;
-    color: #888;
-    margin-top: 4px;
-  }
-  
-  .install-button-wrapper {
-    position: absolute;
-    right: 10px;
-    top: 50%;
-    transform: translateY(-50%);
-  }
-  
-  .install-button {
-    background-color: #007bff;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    padding: 8px 16px;
-    font-size: 14px;
-    font-weight: bold;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
-    transition: background-color 0.3s, transform 0.2s;
-    white-space: nowrap;
-  }
-  
-  .install-button:focus {
-    outline: none;
-  }
-  
-  .install-button:hover {
-    background-color: #0056b3;
-    transform: scale(1.05);
-  }
-  
-  .install-button:active {
-    background-color: #004494;
-  }
-  
-  .credits-header {
-    text-align: center;
-    padding: 20px;
-  }
-  
-  .intro {
-    font-size: 18px;
-    font-weight: bold;
-    color: #333;
-    margin: 0;
-  }
-  
-  .credits-list {
-    padding: 10px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-  
-  .credit-card {
-    width: 90%;
-    max-width: 500px;
-    margin-bottom: 15px;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-    border-radius: 8px;
-    overflow: hidden;
-  }
-  
-  .card-content {
-    padding: 15px;
-  }
-  
-  .card-title {
-    font-size: 20px;
-    font-weight: bold;
-    color: #007bff;
-    margin: 0;
-    text-align: center;
-  }
-  
-  .card-description {
-    font-size: 16px;
-    color: #555;
-    margin-top: 5px;
-    text-align: center;
-  }
-  
-  .limited-width {
-    max-width: 80%;
-    margin: 0 auto;
-    text-align: center;
-  }
-  
-  .centered-image {
-    display: block;
-    margin: 0 auto;
-    max-width: 80%;
-  }
-  
-  .app-details-page {
-    text-align: center;
-    padding: 20px;
-  }
-  
-  .app-icon-large {
-    width: 150px;
-    height: 150px;
-    border-radius: 20px;
-    border: 2px solid #ddd;
-    margin-bottom: 20px;
-  }
-  
-  .app-description {
-    font-size: 16px;
-    color: #555;
-    margin-bottom: 20px;
-  }
-  
-  .install-buttons {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 10px;
-  }
-  
-  .install-buttons ons-button {
-    width: 100%;
-    max-width: 300px;
-  }
+  display: flex;
+  justify-content: center;
+  padding: 10px;
+}
+
+#searchInput {
+  width: 80%;
+  max-width: 400px;
+  border-radius: 20px;
+  border: none;
+  padding: 10px 15px;
+  font-size: 16px;
+  background-color: #fff;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.app-list {
+  padding: 10px;
+  box-sizing: border-box;
+}
+
+.app-card {
+  margin-bottom: 10px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  border-radius: 12px;
+  overflow: hidden;
+  position: relative;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  padding: 0;
+  box-sizing: border-box;
+  background-color: #fff;
+}
+
+.app-content {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  padding: 10px;
+  box-sizing: border-box;
+}
+
+.app-icon {
+  flex: 0 0 60px;
+  margin-right: 10px;
+}
+
+.app-icon img {
+  width: 100%;
+  height: auto;
+  display: block;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+}
+
+.app-details {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.app-title {
+  font-size: 16px;
+  font-weight: bold;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: calc(100% - 80px);
+}
+
+.app-version {
+  font-size: 14px;
+  color: #888;
+  margin-top: 4px;
+}
+
+.install-button-wrapper {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.install-button {
+  background-color: var(--primary-color);
+  color: white;
+  border: none;
+  border-radius: 20px;
+  padding: 8px 16px;
+  font-size: 14px;
+  font-weight: bold;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+  transition: background-color 0.3s, transform 0.2s;
+  white-space: nowrap;
+}
+
+.install-button:focus {
+  outline: none;
+}
+
+.install-button:hover {
+  background-color: var(--secondary-color);
+  transform: scale(1.05);
+}
+
+.install-button:active {
+  background-color: var(--accent-color);
+}
+
+.credits-header {
+  text-align: center;
+  padding: 20px;
+}
+
+.intro {
+  font-size: 18px;
+  font-weight: bold;
+  color: var(--text-color);
+  margin: 0;
+}
+
+.credits-list {
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.credit-card {
+  width: 90%;
+  max-width: 500px;
+  margin-bottom: 15px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  border-radius: 12px;
+  overflow: hidden;
+  background-color: #fff;
+}
+
+.card-content {
+  padding: 15px;
+}
+
+.card-title {
+  font-size: 20px;
+  font-weight: bold;
+  color: var(--primary-color);
+  margin: 0;
+  text-align: center;
+}
+
+.card-description {
+  font-size: 16px;
+  color: var(--text-color);
+  margin-top: 5px;
+  text-align: center;
+}
+
+.limited-width {
+  max-width: 80%;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.centered-image {
+  display: block;
+  margin: 0 auto;
+  max-width: 80%;
+}
+
+.app-details-page {
+  text-align: center;
+  padding: 20px;
+}
+
+.app-icon-large {
+  width: 150px;
+  height: 150px;
+  border-radius: 20px;
+  border: 2px solid #ddd;
+  margin-bottom: 20px;
+}
+
+.app-description {
+  font-size: 16px;
+  color: var(--text-color);
+  margin-bottom: 20px;
+}
+
+.install-buttons {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.install-buttons ons-button {
+  width: 100%;
+  max-width: 300px;
+}
+
+/* Style the buttons on the app info page */
+#page2 .install-buttons ons-button {
+  background-color: var(--primary-color);
+  color: white;
+  border: none;
+  border-radius: 20px;
+  padding: 8px 16px;
+  font-size: 14px;
+  font-weight: bold;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+  transition: background-color 0.3s, transform 0.2s;
+  white-space: nowrap;
+}
+
+#page2 .install-buttons ons-button:focus {
+  outline: none;
+}
+
+#page2 .install-buttons ons-button:hover {
+  background-color: var(--secondary-color);
+  transform: scale(1.05);
+}
+
+#page2 .install-buttons ons-button:active {
+  background-color: var(--accent-color);
+}
+
+/* Info Page Specific Styles */
+.info-content {
+  padding: 20px;
+}
+
+.section {
+  margin-bottom: 30px;
+}
+
+.section-title {
+  font-size: 24px;
+  font-weight: bold;
+  color: var(--primary-color);
+  margin-bottom: 10px;
+}
+
+.section-text {
+  font-size: 16px;
+  line-height: 1.6;
+  color: var(--text-color);
+}
+
+.centered-image {
+  display: block;
+  margin: 20px auto;
+  max-width: 80%;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+.credits-list {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.credit-card {
+  background-color: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  overflow: hidden;
+}
+
+.card-content {
+  padding: 15px;
+}
+
+.card-title {
+  font-size: 20px;
+  font-weight: bold;
+  color: var(--primary-color);
+  margin-bottom: 5px;
+}
+
+.card-description {
+  font-size: 16px;
+  color: var(--text-color);
+}
+
+.version {
+  font-size: 14px;
+  color: #888;
+  text-align: right;
+}
