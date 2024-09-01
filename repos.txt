@@ -5,4 +5,3 @@ https://flyinghead.github.io/flycast-builds/altstore.json
 https://community-apps.sidestore.io/sidecommunity.json
 https://qnblackcat.github.io/AltStore/apps.json
 https://raw.githubusercontent.com/yodaluca23/SpotC-AltStore-Repo/main/AltStore%20Repo.json
-https://ipa.cypwn.xyz/cypwn.json
