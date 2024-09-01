@@ -93,6 +93,12 @@ body {
   margin-top: 4px;
 }
 
+.app-repo {
+  font-size: 14px;
+  color: #555;
+  margin-top: 4px;
+}
+
 .install-button-wrapper {
   position: absolute;
   right: 10px;
