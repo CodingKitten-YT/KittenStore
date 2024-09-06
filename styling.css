@@ -7,6 +7,7 @@
   --text-color: #333;
 }
 
+
 /* Modern Font Family */
 body {
   font-family: 'Roboto', sans-serif;
@@ -317,6 +318,10 @@ body {
 
 
 
+
+
+
+
 /* Repos Tab */
 #repo-list {
   width: 100%;
@@ -341,3 +346,46 @@ body {
 .add-cstm-repo-btn{
   float: right;
 }
+
+
+
+
+ /* Dark mode styles */
+ .dark-mode {
+  --background-color: #000;
+  background-color: #000000;
+  color: #ffffff;
+}
+
+/* Dark mode styles */
+:root.dark-mode {
+  --background-color: #000;
+}
+
+.dark-mode ons-toolbar,
+.dark-mode ons-bottom-toolbar {
+  background-color: #1c1c1e;
+}
+
+.dark-mode ons-list-item {
+  background-color: #1c1c1e;
+  color: #ffffff;
+}
+
+.dark-mode ons-list-item--tappable:active {
+  background-color: #3a3a3c;
+}
+
+.dark-mode ons-switch__toggle {
+  background-color: #3a3a3c;
+}
+
+.dark-mode ons-switch__handle {
+  background-color: #ffffff;
+}
+
+.dark-mode ons-switch__input:checked + .ons-switch__toggle {
+  background-color: #34c759;
+}
+
+

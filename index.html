@@ -442,60 +442,89 @@
               <ons-switch id="iphonex-patch-switch"></ons-switch>
             </div>
           </ons-list-item>
+          <ons-list-item>
+            <div class="center">
+              <span class="list-item__title">Dark Mode</span>
+            </div>
+            <div class="right">
+              <ons-switch id="dark-mode-switch"></ons-switch>
+            </div>
+          </ons-list-item>
         </ons-list>
       </div>
       <script>
-        document.addEventListener('init', function (event) {
+        document.addEventListener('init', function(event) {
           const page = event.target;
           if (page.id === 'settings-page') {
             const trollstoreSwitch = document.getElementById('trollstore-switch');
             const sidestoreSwitch = document.getElementById('sidestore-switch');
             const appdbSwitch = document.getElementById('appdb-switch');
             const iphonexPatchSwitch = document.getElementById('iphonex-patch-switch');
+            const darkModeSwitch = document.getElementById('dark-mode-switch');
 
             // Set default values if not already set
             if (localStorage.getItem('showTrollStore') === null) localStorage.setItem('showTrollStore', 'true');
             if (localStorage.getItem('showSideStore') === null) localStorage.setItem('showSideStore', 'true');
             if (localStorage.getItem('showAppDB') === null) localStorage.setItem('showAppDB', 'true');
             if (localStorage.getItem('iphonexPatch') === null) localStorage.setItem('iphonexPatch', 'false');
+            if (localStorage.getItem('darkMode') === null) localStorage.setItem('darkMode', 'false');
 
             trollstoreSwitch.checked = localStorage.getItem('showTrollStore') === 'true';
             sidestoreSwitch.checked = localStorage.getItem('showSideStore') === 'true';
             appdbSwitch.checked = localStorage.getItem('showAppDB') === 'true';
             iphonexPatchSwitch.checked = localStorage.getItem('iphonexPatch') === 'true';
+            darkModeSwitch.checked = localStorage.getItem('darkMode') === 'true';
 
-            trollstoreSwitch.addEventListener('change', function () {
+            trollstoreSwitch.addEventListener('change', function() {
               localStorage.setItem('showTrollStore', this.checked);
               updateInstallButtons();
             });
-            sidestoreSwitch.addEventListener('change', function () {
+            sidestoreSwitch.addEventListener('change', function() {
               localStorage.setItem('showSideStore', this.checked);
               updateInstallButtons();
             });
-            appdbSwitch.addEventListener('change', function () {
+            appdbSwitch.addEventListener('change', function() {
               localStorage.setItem('showAppDB', this.checked);
               updateInstallButtons();
             });
-            iphonexPatchSwitch.addEventListener('change', function () {
+            iphonexPatchSwitch.addEventListener('change', function() {
               localStorage.setItem('iphonexPatch', this.checked);
               applyIPhoneXPatch();
             });
+            darkModeSwitch.addEventListener('change', function() {
+              localStorage.setItem('darkMode', this.checked);
+              applyDarkMode();
+            });
+
+            // Apply dark mode on page load
+            applyDarkMode();
           }
         });
 
-        function updateInstallButtons() {
-          const showTrollStore = localStorage.getItem('showTrollStore') === 'true';
-          const showSideStore = localStorage.getItem('showSideStore') === 'true';
-          const showAppDB = localStorage.getItem('showAppDB') === 'true';
-
-          const trollstoreButton = document.getElementById('trollstore-install');
-          const sidestoreButton = document.getElementById('sidestore-install');
-          const appdbButton = document.getElementById('appdb-search');
-
-          if (trollstoreButton) trollstoreButton.style.display = showTrollStore ? 'inline-block' : 'none';
-          if (sidestoreButton) sidestoreButton.style.display = showSideStore ? 'inline-block' : 'none';
-          if (appdbButton) appdbButton.style.display = showAppDB ? 'inline-block' : 'none';
+        function applyDarkMode() {
+          const darkMode = localStorage.getItem('darkMode') === 'true';
+          document.body.classList.toggle('dark-mode', darkMode);
+          document.documentElement.style.setProperty('--background-color', '#000');
+          document.documentElement.style.setProperty('--text-color', '#fff');
         }
+
+        function updateInstallButtons() {
+        const showTrollStore = localStorage.getItem('showTrollStore') !== 'false';
+        const showSideStore = localStorage.getItem('showSideStore') !== 'false';
+        const showAppDB = localStorage.getItem('showAppDB') !== 'false';
+  
+        const trollstoreButton = document.getElementById('trollstore-install');
+        const sidestoreButton = document.getElementById('sidestore-install');
+        const appdbButton = document.getElementById('appdb-search');
+  
+        if (trollstoreButton) trollstoreButton.style.display = showTrollStore ? 'inline-block' : 'none';
+        if (sidestoreButton) sidestoreButton.style.display = showSideStore ? 'inline-block' : 'none';
+        if (appdbButton) appdbButton.style.display = showAppDB ? 'inline-block' : 'none';
+      }
+
+      function makeLinksClickable(text) {
+        return text.replace(/https?:\/\/[^\s]+/g, url => `<a href="${url}" target="_blank">${url}</a>`);
+      }
 
         function applyIPhoneXPatch() {
           const iphonexPatch = localStorage.getItem('iphonexPatch') === 'true';
@@ -512,9 +541,10 @@
           }
         }
 
-        document.addEventListener('DOMContentLoaded', function () {
+        document.addEventListener('DOMContentLoaded', function() {
           updateInstallButtons();
           applyIPhoneXPatch();
+          applyDarkMode();
         });
       </script>
     </ons-page>
