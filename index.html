@@ -123,23 +123,6 @@
         }
 
 
-        function addCustomRepo(url) {
-          const customRepos = JSON.parse(localStorage.getItem('customRepos')) || [];
-          if (!customRepos.includes(url)) {
-            customRepos.push(url);
-            localStorage.setItem('customRepos', JSON.stringify(customRepos));
-            console.log(`Added custom repo: ${url}`);
-          }
-        }
-
-        function removeCustomRepo(url) {
-          let customRepos = JSON.parse(localStorage.getItem('customRepos')) || [];
-          if (customRepos.includes(url)) {
-            customRepos = customRepos.filter(repo => repo !== url);
-            localStorage.setItem('customRepos', JSON.stringify(customRepos));
-            console.log(`Removed custom repo: ${url}`);
-          }
-        }
 
 
         // Fetch all repositories
@@ -154,18 +137,24 @@
 
           repos.forEach(repo => {
             repo.data.apps.forEach(app => {
-              app.repoName = repo.data.name; // Store the repo name with each app
+              app.repoName = repo.data.name;
               window.apps.push(app);
             });
           });
 
           renderApps(window.apps);
 
-          document.getElementById('searchInput').addEventListener('input', function (event) {
-            const query = event.target.value.toLowerCase();
-            const filteredApps = window.apps.filter(app => app.name.toLowerCase().includes(query));
-            renderApps(filteredApps);
-          });
+          // Re-attach the event listener for the search input
+          const searchInput = document.getElementById('searchInput');
+          searchInput.value = ''; // Clear the search input
+          searchInput.removeEventListener('input', handleSearch);
+          searchInput.addEventListener('input', handleSearch);
+        }
+
+        function handleSearch(event) {
+          const query = event.target.value.toLowerCase();
+          const filteredApps = window.apps.filter(app => app.name.toLowerCase().includes(query));
+          renderApps(filteredApps);
         }
 
         function renderApps(apps) {
@@ -453,11 +442,6 @@
               <ons-switch id="iphonex-patch-switch"></ons-switch>
             </div>
           </ons-list-item>
-          <ons-list-item></ons-list-item>
-          <div class="center">
-            <span class="list-item__title">Custom Sources</span>
-          </div>
-          </ons-list-item>
         </ons-list>
       </div>
       <script>
@@ -541,55 +525,22 @@
   <!-- Custom Repos Tab -->
   <template id="repos.html">
     <ons-page>
-      <ons-toolbar>
-        <div class="center">Manage Repositories</div>
-      </ons-toolbar>
 
       <div style="padding: 10px;">
         <ons-list-title>Custom Repositories</ons-list-title>
-        <ons-list id="repo-list"></ons-list>
 
-        <ons-input id="repo-input" placeholder="Add new repository URL" float></ons-input>
-        <ons-button onclick="addCustomRepoFromInput()">Add Repository</ons-button>
+        <div class="custom-repo-container">
+          <ons-input id="repo-input" placeholder="Add new repository URL" float></ons-input>
+          <ons-button class="add-cstm-repo-btn" onclick="addCustomRepoFromInput()">Add Repository</ons-button>
+        </div>
+
+        <br>
+        <ons-list id="repo-list"></ons-list>
       </div>
 
-      <script>
-        document.addEventListener('init', function (event) {
-          if (event.target.id === 'repos-page') {
-            displayCustomRepos();
-          }
-        });
-
-        function displayCustomRepos() {
-          const repoList = document.getElementById('repo-list');
-          const customRepos = JSON.parse(localStorage.getItem('customRepos')) || [];
-          repoList.innerHTML = '';
-
-          customRepos.forEach(repo => {
-            const repoItem = document.createElement('ons-list-item');
-            repoItem.innerHTML = `
-              <span>${repo}</span>
-              <div class="right">
-                <ons-button modifier="quiet" onclick="removeCustomRepo('${repo}')">Remove</ons-button>
-              </div>
-            `;
-            repoList.appendChild(repoItem);
-          });
-        }
-
-        function addCustomRepoFromInput() {
-          const repoInput = document.getElementById('repo-input');
-          const repoUrl = repoInput.value.trim();
-          if (repoUrl) {
-            addCustomRepo(repoUrl);
-            repoInput.value = '';
-            displayCustomRepos();
-          }
-        }
-      </script>
     </ons-page>
   </template>
-
+  <script src="./custom-repos.js"></script>
 </body>
 
 </html>
