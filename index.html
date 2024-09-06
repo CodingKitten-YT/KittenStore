@@ -502,11 +502,26 @@
         });
 
         function applyDarkMode() {
-          const darkMode = localStorage.getItem('darkMode') === 'true';
-          document.body.classList.toggle('dark-mode', darkMode);
-          document.documentElement.style.setProperty('--background-color', '#000');
-          document.documentElement.style.setProperty('--text-color', '#fff');
-        }
+  const darkMode = localStorage.getItem('darkMode') === 'true';
+
+  if (darkMode) {
+    document.body.classList.add('dark-mode');
+    document.documentElement.style.setProperty('--background-color', '#000');
+    document.documentElement.style.setProperty('--text-color', '#fff');
+    document.documentElement.style.setProperty('--card-color', '#1c1c1c');
+    document.documentElement.style.setProperty('--card-border-color', 'transparent');
+    document.documentElement.style.setProperty('--tabbar-background-color', '#1c1c1c');
+  } else {
+    document.body.classList.remove('dark-mode');
+    // Optionally reset to light mode defaults or handle it as needed
+    document.documentElement.style.removeProperty('--background-color');
+    document.documentElement.style.removeProperty('--text-color');
+    document.documentElement.style.removeProperty('--card-color');
+    document.documentElement.style.removeProperty('--card-border-color');
+    document.documentElement.style.removeProperty('--tabbar-background-color');
+  }
+}
+
 
         function updateInstallButtons() {
         const showTrollStore = localStorage.getItem('showTrollStore') !== 'false';

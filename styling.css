@@ -4,7 +4,9 @@
   --secondary-color: #03DAC6;
   --accent-color: #FF5722;
   --background-color: #F5F5F5;
+  --card-color: #fff;
   --text-color: #333;
+  --tabbar-background-color: #fff;
 }
 
 
@@ -48,7 +50,7 @@ body {
   align-items: center;
   padding: 0;
   box-sizing: border-box;
-  background-color: #fff;
+  background-color: var(--card-color);
 }
 
 .app-content {
@@ -69,7 +71,6 @@ body {
   height: auto;
   display: block;
   border-radius: 8px;
-  border: 1px solid #ddd;
 }
 
 .app-details {
