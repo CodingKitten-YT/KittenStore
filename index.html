@@ -453,7 +453,7 @@
         </ons-list>
       </div>
       <script>
-        document.addEventListener('init', function(event) {
+        document.addEventListener('init', function (event) {
           const page = event.target;
           if (page.id === 'settings-page') {
             const trollstoreSwitch = document.getElementById('trollstore-switch');
@@ -475,23 +475,23 @@
             iphonexPatchSwitch.checked = localStorage.getItem('iphonexPatch') === 'true';
             darkModeSwitch.checked = localStorage.getItem('darkMode') === 'true';
 
-            trollstoreSwitch.addEventListener('change', function() {
+            trollstoreSwitch.addEventListener('change', function () {
               localStorage.setItem('showTrollStore', this.checked);
               updateInstallButtons();
             });
-            sidestoreSwitch.addEventListener('change', function() {
+            sidestoreSwitch.addEventListener('change', function () {
               localStorage.setItem('showSideStore', this.checked);
               updateInstallButtons();
             });
-            appdbSwitch.addEventListener('change', function() {
+            appdbSwitch.addEventListener('change', function () {
               localStorage.setItem('showAppDB', this.checked);
               updateInstallButtons();
             });
-            iphonexPatchSwitch.addEventListener('change', function() {
+            iphonexPatchSwitch.addEventListener('change', function () {
               localStorage.setItem('iphonexPatch', this.checked);
               applyIPhoneXPatch();
             });
-            darkModeSwitch.addEventListener('change', function() {
+            darkModeSwitch.addEventListener('change', function () {
               localStorage.setItem('darkMode', this.checked);
               applyDarkMode();
             });
@@ -502,44 +502,44 @@
         });
 
         function applyDarkMode() {
-  const darkMode = localStorage.getItem('darkMode') === 'true';
+          const darkMode = localStorage.getItem('darkMode') === 'true';
 
-  if (darkMode) {
-    document.body.classList.add('dark-mode');
-    document.documentElement.style.setProperty('--background-color', '#000');
-    document.documentElement.style.setProperty('--text-color', '#fff');
-    document.documentElement.style.setProperty('--card-color', '#1c1c1c');
-    document.documentElement.style.setProperty('--card-border-color', 'transparent');
-    document.documentElement.style.setProperty('--tabbar-background-color', '#1c1c1c');
-  } else {
-    document.body.classList.remove('dark-mode');
-    // Optionally reset to light mode defaults or handle it as needed
-    document.documentElement.style.removeProperty('--background-color');
-    document.documentElement.style.removeProperty('--text-color');
-    document.documentElement.style.removeProperty('--card-color');
-    document.documentElement.style.removeProperty('--card-border-color');
-    document.documentElement.style.removeProperty('--tabbar-background-color');
-  }
-}
+          if (darkMode) {
+            document.body.classList.add('dark-mode');
+            document.documentElement.style.setProperty('--background-color', '#000');
+            document.documentElement.style.setProperty('--text-color', '#fff');
+            document.documentElement.style.setProperty('--card-color', '#1c1c1c');
+            document.documentElement.style.setProperty('--card-border-color', 'transparent');
+            document.documentElement.style.setProperty('--tabbar-background-color', '#1c1c1c');
+          } else {
+            document.body.classList.remove('dark-mode');
+            // Optionally reset to light mode defaults or handle it as needed
+            document.documentElement.style.removeProperty('--background-color');
+            document.documentElement.style.removeProperty('--text-color');
+            document.documentElement.style.removeProperty('--card-color');
+            document.documentElement.style.removeProperty('--card-border-color');
+            document.documentElement.style.removeProperty('--tabbar-background-color');
+          }
+        }
 
 
         function updateInstallButtons() {
-        const showTrollStore = localStorage.getItem('showTrollStore') !== 'false';
-        const showSideStore = localStorage.getItem('showSideStore') !== 'false';
-        const showAppDB = localStorage.getItem('showAppDB') !== 'false';
-  
-        const trollstoreButton = document.getElementById('trollstore-install');
-        const sidestoreButton = document.getElementById('sidestore-install');
-        const appdbButton = document.getElementById('appdb-search');
-  
-        if (trollstoreButton) trollstoreButton.style.display = showTrollStore ? 'inline-block' : 'none';
-        if (sidestoreButton) sidestoreButton.style.display = showSideStore ? 'inline-block' : 'none';
-        if (appdbButton) appdbButton.style.display = showAppDB ? 'inline-block' : 'none';
-      }
+          const showTrollStore = localStorage.getItem('showTrollStore') !== 'false';
+          const showSideStore = localStorage.getItem('showSideStore') !== 'false';
+          const showAppDB = localStorage.getItem('showAppDB') !== 'false';
 
-      function makeLinksClickable(text) {
-        return text.replace(/https?:\/\/[^\s]+/g, url => `<a href="${url}" target="_blank">${url}</a>`);
-      }
+          const trollstoreButton = document.getElementById('trollstore-install');
+          const sidestoreButton = document.getElementById('sidestore-install');
+          const appdbButton = document.getElementById('appdb-search');
+
+          if (trollstoreButton) trollstoreButton.style.display = showTrollStore ? 'inline-block' : 'none';
+          if (sidestoreButton) sidestoreButton.style.display = showSideStore ? 'inline-block' : 'none';
+          if (appdbButton) appdbButton.style.display = showAppDB ? 'inline-block' : 'none';
+        }
+
+        function makeLinksClickable(text) {
+          return text.replace(/https?:\/\/[^\s]+/g, url => `<a href="${url}" target="_blank">${url}</a>`);
+        }
 
         function applyIPhoneXPatch() {
           const iphonexPatch = localStorage.getItem('iphonexPatch') === 'true';
@@ -556,7 +556,7 @@
           }
         }
 
-        document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('DOMContentLoaded', function () {
           updateInstallButtons();
           applyIPhoneXPatch();
           applyDarkMode();
