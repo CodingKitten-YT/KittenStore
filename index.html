@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,17 +10,17 @@
   <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
   <link rel="stylesheet" href="styling.css">
   <script>
-    if('serviceWorker' in navigator) {
+    if ('serviceWorker' in navigator) {
       navigator.serviceWorker.register('/sw.js')
         .then(() => console.log("Service Worker Registered"))
         .catch(e => console.log(e));
     }
   </script>
   <script>
-    document.addEventListener('DOMContentLoaded', function() {
+    document.addEventListener('DOMContentLoaded', function () {
       const iphonexPatch = localStorage.getItem('iphonexPatch') === 'true';
       const htmlElement = document.documentElement;
-  
+
       if (iphonexPatch && ons.platform.isIPhoneX()) {
         htmlElement.setAttribute('onsflag-iphonex-portrait', '');
         htmlElement.setAttribute('onsflag-iphonex-landscape', '');
@@ -30,9 +31,11 @@
     });
   </script>
   <link rel="manifest" href="/manifest.json">
-  <link rel="icon" type="image/png" href="https://raw.githubusercontent.com/CodingKitten-YT/KittenStore/main/250icon.png" />
+  <link rel="icon" type="image/png"
+    href="https://raw.githubusercontent.com/CodingKitten-YT/KittenStore/main/250icon.png" />
   <script src="https://cdn.jsdelivr.net/npm/onsenui/js/onsenui.min.js"></script>
 </head>
+
 <body>
   <ons-navigator id="appNavigator" swipeable swipe-target-width="80px">
     <ons-page>
@@ -53,7 +56,7 @@
         <ons-tab label="Settings" icon="md-settings" page="settings.html"></ons-tab>
       </ons-tabbar>
       <script>
-        ons.getScriptPage().addEventListener('prechange', function(event) {
+        ons.getScriptPage().addEventListener('prechange', function (event) {
           if (event.target.matches('#appTabbar')) {
             event.currentTarget.querySelector('ons-toolbar .center').innerHTML = event.tabItem.getAttribute('label');
           }
@@ -65,22 +68,31 @@
   <template id="home.html">
     <ons-page>
       <div class="search-bar-wrapper">
-        <ons-search-input id="searchInput" placeholder="Search apps..." aria-label="Search apps" autocapitalize="off" autocorrect="off"></ons-search-input>
+        <ons-search-input id="searchInput" placeholder="Search apps..." aria-label="Search apps" autocapitalize="off"
+          autocorrect="off"></ons-search-input>
       </div>
       <div id="app-list" class="app-list"></div>
       <script>
-        document.addEventListener('init', function() {
+        document.addEventListener('init', function () {
           fetchApps();
         });
 
+        // Function to fetch repositories
         async function fetchRepositories() {
           try {
+            // Fetch the default repos from repos.txt
             const response = await fetch('/repos.txt');
             if (!response.ok) {
               throw new Error('Network response was not ok');
             }
             const text = await response.text();
-            const repoUrls = text.split('\n').filter(url => url.trim() !== '');
+            const defaultRepoUrls = text.split('\n').filter(url => url.trim() !== '');
+
+            // Check if there are custom repos in localStorage
+            const customRepos = JSON.parse(localStorage.getItem('customRepos')) || [];
+            const repoUrls = [...defaultRepoUrls, ...customRepos];
+
+            // Fetch repo data from all URLs
             const repos = await Promise.all(repoUrls.map(async url => {
               const repoResponse = await fetch(url);
               if (!repoResponse.ok) {
@@ -94,6 +106,38 @@
             return [];
           }
         }
+
+        // Function to add a custom repo URL to localStorage
+        function addCustomRepo(url) {
+          const customRepos = JSON.parse(localStorage.getItem('customRepos')) || [];
+          if (!customRepos.includes(url)) {
+            customRepos.push(url);
+            localStorage.setItem('customRepos', JSON.stringify(customRepos));
+            console.log(`Added custom repo: ${url}`);
+          } else {
+            console.log(`Repo already exists: ${url}`);
+          }
+        }
+
+        // Function to remove a custom repo URL from localStorage
+        function removeCustomRepo(url) {
+          let customRepos = JSON.parse(localStorage.getItem('customRepos')) || [];
+          if (customRepos.includes(url)) {
+            customRepos = customRepos.filter(repo => repo !== url);
+            localStorage.setItem('customRepos', JSON.stringify(customRepos));
+            console.log(`Removed custom repo: ${url}`);
+          } else {
+            console.log(`Repo not found: ${url}`);
+          }
+        }
+
+
+        // Example usage: add a new custom repo
+        addCustomRepo('https://wuxu1.github.io/wuxu-complete-plus.json');
+
+        // Fetch all repositories
+        fetchRepositories().then(repos => console.log(repos));
+
 
         async function fetchApps() {
           const repos = await fetchRepositories();
@@ -110,7 +154,7 @@
 
           renderApps(window.apps);
 
-          document.getElementById('searchInput').addEventListener('input', function(event) {
+          document.getElementById('searchInput').addEventListener('input', function (event) {
             const query = event.target.value.toLowerCase();
             const filteredApps = window.apps.filter(app => app.name.toLowerCase().includes(query));
             renderApps(filteredApps);
@@ -164,8 +208,10 @@
       <div class="credits-header">
         <p class="intro">Trouble shooting:</p>
       </div>
-      <p class="limited-width">Please ensure you have URL Scheme enabled when trying to install apps with trollstore. It is under the security section in your trollstore app.</p>
-      <img src="https://raw.githubusercontent.com/CodingKitten-YT/KittenStore/main/IMG_0006.jpeg" alt="Screenshot" class="centered-image">
+      <p class="limited-width">Please ensure you have URL Scheme enabled when trying to install apps with trollstore. It
+        is under the security section in your trollstore app.</p>
+      <img src="https://raw.githubusercontent.com/CodingKitten-YT/KittenStore/main/IMG_0006.jpeg" alt="Screenshot"
+        class="centered-image">
       <br>
       <div class="credits-header">
         <p class="intro">Resources used for this project:</p>
@@ -174,7 +220,8 @@
         <ons-card class="credit-card" onclick="location.href='https://onsen.io';">
           <div class="card-content">
             <div class="card-title">Onsen UI</div>
-            <div class="card-description">The most beautiful and efficient way to develop HTML5 hybrid and mobile web apps.</div>
+            <div class="card-description">The most beautiful and efficient way to develop HTML5 hybrid and mobile web
+              apps.</div>
           </div>
         </ons-card>
         <ons-card class="credit-card" onclick="location.href='https://github.com/swaggyP36000/TrollStore-IPAs';">
@@ -186,7 +233,9 @@
         <div class="credits-header">
           <p class="intro">Disclaimer:</p>
         </div>
-        <p class="limited-width">I did not make any of these apps and i am not responsible for any use of them. I do not host any of these ipa files, this project is just for displaying them kinda like a search engine. I do not endorce piracy. If you have any complaints please contact me on discord: codingkitten</p>
+        <p class="limited-width">I did not make any of these apps and i am not responsible for any use of them. I do not
+          host any of these ipa files, this project is just for displaying them kinda like a search engine. I do not
+          endorce piracy. If you have any complaints please contact me on discord: codingkitten</p>
         <div class="credits-header">
           <p class="intro">Emoji Guide for App Selection (Status):</p>
         </div>
@@ -194,12 +243,16 @@
           ✅ Indicates that an app is working or up-to-date.<br>
           ❌ Indicates that an app is either discontinued or not working.<br>
           ⚠️ Indicates that an app is outdated but still functional.<br>
-          ❔ Indicates that the app's original source is inaccessible or has not been tested and its functionality is uncertain.<br>
-          👍 Indicates that an app or tweak is considered better than another one from the repo. (Example: Paperback > Aidoku)<br>
+          ❔ Indicates that the app's original source is inaccessible or has not been tested and its functionality is
+          uncertain.<br>
+          👍 Indicates that an app or tweak is considered better than another one from the repo. (Example: Paperback >
+          Aidoku)<br>
           ⭐ Indicates that an app fully supports Widgets.<br>
           💡 Indicates that an app contains a hand-made tutorial. (Linked in its description)<br>
         </p>
-        <p class="limited-width">These emojis should assist you in making informed decisions when selecting apps or tweaks from this repository. Please consider the provided emoji guidance when choosing the right application for your needs.</p>
+        <p class="limited-width">These emojis should assist you in making informed decisions when selecting apps or
+          tweaks from this repository. Please consider the provided emoji guidance when choosing the right application
+          for your needs.</p>
       </div>
       <p class="limited-width">V1.05</p>
     </ons-page>
@@ -212,14 +265,14 @@
         <div class="left"><ons-back-button>Back</ons-back-button></div>
         <div class="center">{{ appName }}</div>
       </ons-toolbar>
-  
+
       <div class="app-details-page">
         <img class="app-icon-large" src="" alt="{{ appName }} Icon">
-  
+
         <div class="app-description"></div>
         <div class="app-repo"></div> <!-- Add this line -->
         <div class="app-size"></div>
-  
+
         <div class="install-buttons">
           <ons-button id="trollstore-install" aria-label="Install with TrollStore">Install with TrollStore</ons-button>
           <ons-button id="sidestore-install" aria-label="Install with SideStore">Install with SideStore</ons-button>
@@ -227,118 +280,118 @@
           <ons-button id="ipa-download" aria-label="Download IPA">Download IPA</ons-button>
         </div>
       </div>
-  
+
       <script>
-        document.addEventListener('init', async function(event) {
+        document.addEventListener('init', async function (event) {
           const page = event.target;
-  
+
           if (page.id === 'page2') {
-              const { appName } = page.data;
-  
-              try {
-                  const app = await fetchAppByName(appName);
-                  const latestVersion = app.versions && app.versions[0]; // Ensure versions is not undefined
-                  if (!latestVersion) {
-                    page.querySelector('.app-description').innerText = 'No versions available for this app.';
-                    return;
-                  }
-  
-                  page.querySelector('.center').innerText = app.name;
-  
-                  const appIconElement = page.querySelector('.app-icon-large');
-                  appIconElement.src = app.iconURL;
-                  appIconElement.onerror = function() {
-                      this.src = 'https://placehold.co/400x400/000000/FFFFFF/png?text=No%5CnIcon&font=roboto';
-                  };
-  
-                  const cleanedDescription = latestVersion.localizedDescription.replace(/\nLast updated:.*$/m, '').replace(/Status:.*$/m, '');
-  
-                  const lastUpdatedDate = new Date(latestVersion.date);
-                  const currentDate = new Date();
-                  const diffTime = Math.abs(currentDate - lastUpdatedDate);
-                  const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-  
-                  const updatedDescription = `${cleanedDescription}\nLast updated: ${diffDays} days ago`;
-                  page.querySelector('.app-description').innerHTML = makeLinksClickable(updatedDescription);
-  
-                  const statusMatch = latestVersion.localizedDescription.match(/Status:\s*(.*)/);
-                  const statusEmojis = statusMatch ? statusMatch[1] : '';
-  
-                  const statusElement = document.createElement('div');
-                  statusElement.className = 'app-status';
-                  statusElement.innerText = statusEmojis;
-                  page.querySelector('.app-description').appendChild(statusElement);
-  
-                  page.querySelector('.app-repo').innerText = `From: ${app.repoName}`;
-  
-                  const fileSize = formatFileSize(latestVersion.size);
-                  page.querySelector('.app-size').innerText = `File Size: ${fileSize}`;
-  
-                  page.querySelector('#trollstore-install').onclick = function() {
-                      const trollStoreURL = `apple-magnifier://install?url=${encodeURIComponent(latestVersion.downloadURL)}`;
-                      location.href = trollStoreURL;
-                  };
-  
-                  page.querySelector('#sidestore-install').onclick = function() {
-                      const sideStoreURL = `sidestore://source?url=${encodeURIComponent(latestVersion.downloadURL)}`;
-                      location.href = sideStoreURL;
-                  };
-  
-                  page.querySelector('#appdb-search').onclick = function() {
-                      const appdbURL = `https://appdb.to/?name=${encodeURIComponent(app.name)}`;
-                      window.open(appdbURL, '_blank');
-                  };
-  
-                  page.querySelector('#ipa-download').onclick = function() {
-                      window.open(latestVersion.downloadURL, '_blank');
-                  };
-  
-                  updateInstallButtons();
-  
-              } catch (error) {
-                  console.error('Error fetching app details:', error);
-                  page.querySelector('.app-description').innerText = 'Failed to load app details.';
+            const { appName } = page.data;
+
+            try {
+              const app = await fetchAppByName(appName);
+              const latestVersion = app.versions && app.versions[0]; // Ensure versions is not undefined
+              if (!latestVersion) {
+                page.querySelector('.app-description').innerText = 'No versions available for this app.';
+                return;
               }
+
+              page.querySelector('.center').innerText = app.name;
+
+              const appIconElement = page.querySelector('.app-icon-large');
+              appIconElement.src = app.iconURL;
+              appIconElement.onerror = function () {
+                this.src = 'https://placehold.co/400x400/000000/FFFFFF/png?text=No%5CnIcon&font=roboto';
+              };
+
+              const cleanedDescription = latestVersion.localizedDescription.replace(/\nLast updated:.*$/m, '').replace(/Status:.*$/m, '');
+
+              const lastUpdatedDate = new Date(latestVersion.date);
+              const currentDate = new Date();
+              const diffTime = Math.abs(currentDate - lastUpdatedDate);
+              const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+
+              const updatedDescription = `${cleanedDescription}\nLast updated: ${diffDays} days ago`;
+              page.querySelector('.app-description').innerHTML = makeLinksClickable(updatedDescription);
+
+              const statusMatch = latestVersion.localizedDescription.match(/Status:\s*(.*)/);
+              const statusEmojis = statusMatch ? statusMatch[1] : '';
+
+              const statusElement = document.createElement('div');
+              statusElement.className = 'app-status';
+              statusElement.innerText = statusEmojis;
+              page.querySelector('.app-description').appendChild(statusElement);
+
+              page.querySelector('.app-repo').innerText = `From: ${app.repoName}`;
+
+              const fileSize = formatFileSize(latestVersion.size);
+              page.querySelector('.app-size').innerText = `File Size: ${fileSize}`;
+
+              page.querySelector('#trollstore-install').onclick = function () {
+                const trollStoreURL = `apple-magnifier://install?url=${encodeURIComponent(latestVersion.downloadURL)}`;
+                location.href = trollStoreURL;
+              };
+
+              page.querySelector('#sidestore-install').onclick = function () {
+                const sideStoreURL = `sidestore://source?url=${encodeURIComponent(latestVersion.downloadURL)}`;
+                location.href = sideStoreURL;
+              };
+
+              page.querySelector('#appdb-search').onclick = function () {
+                const appdbURL = `https://appdb.to/?name=${encodeURIComponent(app.name)}`;
+                window.open(appdbURL, '_blank');
+              };
+
+              page.querySelector('#ipa-download').onclick = function () {
+                window.open(latestVersion.downloadURL, '_blank');
+              };
+
+              updateInstallButtons();
+
+            } catch (error) {
+              console.error('Error fetching app details:', error);
+              page.querySelector('.app-description').innerText = 'Failed to load app details.';
+            }
           }
-      });
-  
-      async function fetchAppByName(appName) {
+        });
+
+        async function fetchAppByName(appName) {
           const repos = await fetchRepositories();
           for (const repo of repos) {
-              const app = repo.data.apps.find(app => app.name === appName);
-              if (app) {
-                  app.repoName = repo.data.name; // Store the repo name with the app
-                  return app;
-              }
+            const app = repo.data.apps.find(app => app.name === appName);
+            if (app) {
+              app.repoName = repo.data.name; // Store the repo name with the app
+              return app;
+            }
           }
           throw new Error(`App "${appName}" not found in any repository`);
-      }
-  
-      function formatFileSize(bytes) {
+        }
+
+        function formatFileSize(bytes) {
           if (bytes === 0) return '0 Bytes';
           const k = 1024;
           const sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB'];
           const i = Math.floor(Math.log(bytes) / Math.log(k));
           return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
-      }
-  
-      function updateInstallButtons() {
-        const showTrollStore = localStorage.getItem('showTrollStore') !== 'false';
-        const showSideStore = localStorage.getItem('showSideStore') !== 'false';
-        const showAppDB = localStorage.getItem('showAppDB') !== 'false';
-  
-        const trollstoreButton = document.getElementById('trollstore-install');
-        const sidestoreButton = document.getElementById('sidestore-install');
-        const appdbButton = document.getElementById('appdb-search');
-  
-        if (trollstoreButton) trollstoreButton.style.display = showTrollStore ? 'inline-block' : 'none';
-        if (sidestoreButton) sidestoreButton.style.display = showSideStore ? 'inline-block' : 'none';
-        if (appdbButton) appdbButton.style.display = showAppDB ? 'inline-block' : 'none';
-      }
+        }
 
-      function makeLinksClickable(text) {
-        return text.replace(/https?:\/\/[^\s]+/g, url => `<a href="${url}" target="_blank">${url}</a>`);
-      }
+        function updateInstallButtons() {
+          const showTrollStore = localStorage.getItem('showTrollStore') !== 'false';
+          const showSideStore = localStorage.getItem('showSideStore') !== 'false';
+          const showAppDB = localStorage.getItem('showAppDB') !== 'false';
+
+          const trollstoreButton = document.getElementById('trollstore-install');
+          const sidestoreButton = document.getElementById('sidestore-install');
+          const appdbButton = document.getElementById('appdb-search');
+
+          if (trollstoreButton) trollstoreButton.style.display = showTrollStore ? 'inline-block' : 'none';
+          if (sidestoreButton) sidestoreButton.style.display = showSideStore ? 'inline-block' : 'none';
+          if (appdbButton) appdbButton.style.display = showAppDB ? 'inline-block' : 'none';
+        }
+
+        function makeLinksClickable(text) {
+          return text.replace(/https?:\/\/[^\s]+/g, url => `<a href="${url}" target="_blank">${url}</a>`);
+        }
       </script>
     </ons-page>
   </template>
@@ -389,65 +442,70 @@
               <ons-switch id="iphonex-patch-switch"></ons-switch>
             </div>
           </ons-list-item>
+          <ons-list-item></ons-list-item>
+          <div class="center">
+            <span class="list-item__title">Custom Sources</span>
+          </div>
+          </ons-list-item>
         </ons-list>
       </div>
       <script>
-        document.addEventListener('init', function(event) {
+        document.addEventListener('init', function (event) {
           const page = event.target;
           if (page.id === 'settings-page') {
             const trollstoreSwitch = document.getElementById('trollstore-switch');
             const sidestoreSwitch = document.getElementById('sidestore-switch');
             const appdbSwitch = document.getElementById('appdb-switch');
             const iphonexPatchSwitch = document.getElementById('iphonex-patch-switch');
-  
+
             // Set default values if not already set
             if (localStorage.getItem('showTrollStore') === null) localStorage.setItem('showTrollStore', 'true');
             if (localStorage.getItem('showSideStore') === null) localStorage.setItem('showSideStore', 'true');
             if (localStorage.getItem('showAppDB') === null) localStorage.setItem('showAppDB', 'true');
             if (localStorage.getItem('iphonexPatch') === null) localStorage.setItem('iphonexPatch', 'false');
-  
+
             trollstoreSwitch.checked = localStorage.getItem('showTrollStore') === 'true';
             sidestoreSwitch.checked = localStorage.getItem('showSideStore') === 'true';
             appdbSwitch.checked = localStorage.getItem('showAppDB') === 'true';
             iphonexPatchSwitch.checked = localStorage.getItem('iphonexPatch') === 'true';
-  
-            trollstoreSwitch.addEventListener('change', function() {
+
+            trollstoreSwitch.addEventListener('change', function () {
               localStorage.setItem('showTrollStore', this.checked);
               updateInstallButtons();
             });
-            sidestoreSwitch.addEventListener('change', function() {
+            sidestoreSwitch.addEventListener('change', function () {
               localStorage.setItem('showSideStore', this.checked);
               updateInstallButtons();
             });
-            appdbSwitch.addEventListener('change', function() {
+            appdbSwitch.addEventListener('change', function () {
               localStorage.setItem('showAppDB', this.checked);
               updateInstallButtons();
             });
-            iphonexPatchSwitch.addEventListener('change', function() {
+            iphonexPatchSwitch.addEventListener('change', function () {
               localStorage.setItem('iphonexPatch', this.checked);
               applyIPhoneXPatch();
             });
           }
         });
-  
+
         function updateInstallButtons() {
           const showTrollStore = localStorage.getItem('showTrollStore') === 'true';
           const showSideStore = localStorage.getItem('showSideStore') === 'true';
           const showAppDB = localStorage.getItem('showAppDB') === 'true';
-  
+
           const trollstoreButton = document.getElementById('trollstore-install');
           const sidestoreButton = document.getElementById('sidestore-install');
           const appdbButton = document.getElementById('appdb-search');
-  
+
           if (trollstoreButton) trollstoreButton.style.display = showTrollStore ? 'inline-block' : 'none';
           if (sidestoreButton) sidestoreButton.style.display = showSideStore ? 'inline-block' : 'none';
           if (appdbButton) appdbButton.style.display = showAppDB ? 'inline-block' : 'none';
         }
-  
+
         function applyIPhoneXPatch() {
           const iphonexPatch = localStorage.getItem('iphonexPatch') === 'true';
           const htmlElement = document.documentElement;
-  
+
           if (iphonexPatch) {
             if (ons.platform.isIPhoneX()) {
               htmlElement.setAttribute('onsflag-iphonex-portrait', '');
@@ -458,8 +516,8 @@
             htmlElement.removeAttribute('onsflag-iphonex-landscape');
           }
         }
-  
-        document.addEventListener('DOMContentLoaded', function() {
+
+        document.addEventListener('DOMContentLoaded', function () {
           updateInstallButtons();
           applyIPhoneXPatch();
         });
@@ -467,4 +525,5 @@
     </ons-page>
   </template>
 </body>
+
 </html>
