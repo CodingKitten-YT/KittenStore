@@ -314,3 +314,11 @@ body {
   color: #888;
   text-align: right;
 }
+
+
+
+/* Repos Tab */
+#repo-list ons-list-item {
+  padding: 10px;
+  font-size: 16px;
+}

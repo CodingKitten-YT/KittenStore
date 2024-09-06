@@ -5,10 +5,28 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>KittenStore</title>
+
+  <!-- Onsen UI CSS -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/onsenui/css/onsenui.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/onsenui/css/onsen-css-components.css">
+
+  <!-- Google Fonts -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+
+
+  <!-- Local Styles -->
   <link rel="stylesheet" href="styling.css">
+
+  <!-- Adds Download Button On Desktop -->
+  <link rel="manifest" href="/manifest.json">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/png"
+    href="https://raw.githubusercontent.com/CodingKitten-YT/KittenStore/main/250icon.png" />
+
+  <!-- Onsen UI JS -->
+  <script src="https://cdn.jsdelivr.net/npm/onsenui/js/onsenui.min.js"></script>
+
   <script>
     if ('serviceWorker' in navigator) {
       navigator.serviceWorker.register('/sw.js')
@@ -30,10 +48,6 @@
       }
     });
   </script>
-  <link rel="manifest" href="/manifest.json">
-  <link rel="icon" type="image/png"
-    href="https://raw.githubusercontent.com/CodingKitten-YT/KittenStore/main/250icon.png" />
-  <script src="https://cdn.jsdelivr.net/npm/onsenui/js/onsenui.min.js"></script>
 </head>
 
 <body>
@@ -54,6 +68,7 @@
         <ons-tab label="Home" icon="md-home" page="home.html" active></ons-tab>
         <ons-tab label="Info" icon="md-info" page="info.html"></ons-tab>
         <ons-tab label="Settings" icon="md-settings" page="settings.html"></ons-tab>
+        <ons-tab label="Repositories" icon="md-folder" page="repos.html"></ons-tab> <!-- New Tab -->
       </ons-tabbar>
       <script>
         ons.getScriptPage().addEventListener('prechange', function (event) {
@@ -65,6 +80,7 @@
     </ons-page>
   </template>
 
+  <!-- Home/Apps Tab -->
   <template id="home.html">
     <ons-page>
       <div class="search-bar-wrapper">
@@ -77,7 +93,6 @@
           fetchApps();
         });
 
-        // Function to fetch repositories
         async function fetchRepositories() {
           try {
             // Fetch the default repos from repos.txt
@@ -88,7 +103,7 @@
             const text = await response.text();
             const defaultRepoUrls = text.split('\n').filter(url => url.trim() !== '');
 
-            // Check if there are custom repos in localStorage
+            // Get custom repos from localStorage
             const customRepos = JSON.parse(localStorage.getItem('customRepos')) || [];
             const repoUrls = [...defaultRepoUrls, ...customRepos];
 
@@ -107,33 +122,25 @@
           }
         }
 
-        // Function to add a custom repo URL to localStorage
+
         function addCustomRepo(url) {
           const customRepos = JSON.parse(localStorage.getItem('customRepos')) || [];
           if (!customRepos.includes(url)) {
             customRepos.push(url);
             localStorage.setItem('customRepos', JSON.stringify(customRepos));
             console.log(`Added custom repo: ${url}`);
-          } else {
-            console.log(`Repo already exists: ${url}`);
           }
         }
 
-        // Function to remove a custom repo URL from localStorage
         function removeCustomRepo(url) {
           let customRepos = JSON.parse(localStorage.getItem('customRepos')) || [];
           if (customRepos.includes(url)) {
             customRepos = customRepos.filter(repo => repo !== url);
             localStorage.setItem('customRepos', JSON.stringify(customRepos));
             console.log(`Removed custom repo: ${url}`);
-          } else {
-            console.log(`Repo not found: ${url}`);
           }
         }
 
-
-        // Example usage: add a new custom repo
-        addCustomRepo('https://wuxu1.github.io/wuxu-complete-plus.json');
 
         // Fetch all repositories
         fetchRepositories().then(repos => console.log(repos));
@@ -203,6 +210,8 @@
     </ons-page>
   </template>
 
+
+  <!-- Info/About Tab -->
   <template id="info.html">
     <ons-page>
       <div class="credits-header">
@@ -396,6 +405,8 @@
     </ons-page>
   </template>
 
+
+  <!-- Settings Tab -->
   <template id="settings.html">
     <ons-page id="settings-page">
       <div style="padding: 20px;">
@@ -524,6 +535,61 @@
       </script>
     </ons-page>
   </template>
+
+
+
+  <!-- Custom Repos Tab -->
+  <template id="repos.html">
+    <ons-page>
+      <ons-toolbar>
+        <div class="center">Manage Repositories</div>
+      </ons-toolbar>
+
+      <div style="padding: 10px;">
+        <ons-list-title>Custom Repositories</ons-list-title>
+        <ons-list id="repo-list"></ons-list>
+
+        <ons-input id="repo-input" placeholder="Add new repository URL" float></ons-input>
+        <ons-button onclick="addCustomRepoFromInput()">Add Repository</ons-button>
+      </div>
+
+      <script>
+        document.addEventListener('init', function (event) {
+          if (event.target.id === 'repos-page') {
+            displayCustomRepos();
+          }
+        });
+
+        function displayCustomRepos() {
+          const repoList = document.getElementById('repo-list');
+          const customRepos = JSON.parse(localStorage.getItem('customRepos')) || [];
+          repoList.innerHTML = '';
+
+          customRepos.forEach(repo => {
+            const repoItem = document.createElement('ons-list-item');
+            repoItem.innerHTML = `
+              <span>${repo}</span>
+              <div class="right">
+                <ons-button modifier="quiet" onclick="removeCustomRepo('${repo}')">Remove</ons-button>
+              </div>
+            `;
+            repoList.appendChild(repoItem);
+          });
+        }
+
+        function addCustomRepoFromInput() {
+          const repoInput = document.getElementById('repo-input');
+          const repoUrl = repoInput.value.trim();
+          if (repoUrl) {
+            addCustomRepo(repoUrl);
+            repoInput.value = '';
+            displayCustomRepos();
+          }
+        }
+      </script>
+    </ons-page>
+  </template>
+
 </body>
 
 </html>
