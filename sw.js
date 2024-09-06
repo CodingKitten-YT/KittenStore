@@ -1,4 +1,4 @@
-self.addEventListener('install', function(e) {
+self.addEventListener('install', (e) => {
   console.log('Service Worker installing.');
   e.waitUntil(
     caches.open('kittenstore').then(cache => {
