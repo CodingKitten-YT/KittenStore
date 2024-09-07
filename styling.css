@@ -4,8 +4,11 @@
   --secondary-color: #03DAC6;
   --accent-color: #FF5722;
   --background-color: #F5F5F5;
+  --card-color: #fff;
   --text-color: #333;
+  --tabbar-background-color: #fff;
 }
+
 
 /* Modern Font Family */
 body {
@@ -47,7 +50,7 @@ body {
   align-items: center;
   padding: 0;
   box-sizing: border-box;
-  background-color: #fff;
+  background-color: var(--card-color);
 }
 
 .app-content {
@@ -68,7 +71,6 @@ body {
   height: auto;
   display: block;
   border-radius: 8px;
-  border: 1px solid #ddd;
 }
 
 .app-details {
@@ -314,3 +316,77 @@ body {
   color: #888;
   text-align: right;
 }
+
+
+
+
+
+
+
+/* Repos Tab */
+#repo-list {
+  width: 100%;
+}
+
+.custom-repo-container {
+  margin-left: 15px;
+  display: flex;
+  align-items: center; /* Vertically centers items */
+}
+
+#repo-input {
+  flex-grow: 1; /* Allows the input to grow and take available space */
+  max-width: 100%; /* Set a max width relative to the container width */
+}
+
+#repo-button {
+  margin-left: 10px; /* Adds some space between the input and the button */
+}
+
+
+.add-cstm-repo-btn{
+  float: right;
+}
+
+
+
+
+ /* Dark mode styles */
+ .dark-mode {
+  --background-color: #000;
+  background-color: #000000;
+  color: #ffffff;
+}
+
+/* Dark mode styles */
+:root.dark-mode {
+  --background-color: #000;
+}
+
+.dark-mode ons-toolbar,
+.dark-mode ons-bottom-toolbar {
+  background-color: #1c1c1e;
+}
+
+.dark-mode ons-list-item {
+  background-color: #1c1c1e;
+  color: #ffffff;
+}
+
+.dark-mode ons-list-item--tappable:active {
+  background-color: #3a3a3c;
+}
+
+.dark-mode ons-switch__toggle {
+  background-color: #3a3a3c;
+}
+
+.dark-mode ons-switch__handle {
+  background-color: #ffffff;
+}
+
+.dark-mode ons-switch__input:checked + .ons-switch__toggle {
+  background-color: #34c759;
+}
+
+
