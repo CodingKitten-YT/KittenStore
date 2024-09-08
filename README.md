@@ -1,4 +1,4 @@
-# <center><img style="width: 2rem;margin-top: 200px;" src="https://raw.githubusercontent.com/CodingKitten-YT/KittenStore/main/250icon.png"></center> KittenStore
+# <center><img style="width: 2rem;margin-top: 200px;border-radius: 5px;" src="https://raw.githubusercontent.com/CodingKitten-YT/KittenStore/main/250icon.png"></center> KittenStore
 
 Welcome to **KittenStore**!
 
@@ -14,8 +14,8 @@ KittenStore is a clean and ad-free website offering a wide variety of IPA files 
 
 To get started with KittenStore, follow these steps:
 
-1. **Browse the Collection**: Use the search function or browse categories to find the IPA files you need.
-2. **Download**: Click on the desired app to view details and download the IPA file.
+1. **Browse the Collection**: Use the search function to find the IPA files you need.
+2. **Download**: Click on the desired app to view details.
 3. **Install**: You can install using Altstore, Sidestore, AppDB or even just downloading the ipa file.
 
 ## Contributing
