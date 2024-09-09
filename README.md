@@ -36,8 +36,7 @@ Thank you to all the people who have contributed to KittenStore:
 </a>
 
 ## License
-<center><img style="width: 2rem;margin-top: 200px;border-radius: 5px;" src="https://raw.githubusercontent.com/CodingKitten-YT/KittenStore/main/assets/img/250icon.png"></center>
-KittenStore is licensed under the [GNU License](LICENSE).
+<center><img style="width: 2rem;margin-top: 200px;border-radius: 5px;" src="https://www.gnu.org/graphics/gplv3-with-text-136x68.png)"></center> KittenStore is licensed under the [GNU License](LICENSE).
 
 ## Contact
 
