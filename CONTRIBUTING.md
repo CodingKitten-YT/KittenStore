@@ -20,7 +20,3 @@ We welcome the following types of contributions:
 
 ## Contact Information
 If you have any questions or need assistance with your contributions, please reach out on Discord. You can contact me directly with the username **CodingKitten** or join our [Discord server](https://discord.gg/nn3aWNTHET) for support.
-
-## Discord
-You can join our discord server here:
-<iframe src="https://discord.com/widget?id=1279832814136590461&theme=dark" width="350" height="500" allowtransparency="true" frameborder="0" sandbox="allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts"></iframe>
