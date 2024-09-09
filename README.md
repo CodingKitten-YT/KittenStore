@@ -31,7 +31,9 @@ We welcome contributions to KittenStore! If you have suggestions or improvements
 
 Thank you to all the people who have contributed to KittenStore:
 
-[![KittenStore contributors](https://contrib.rocks/image?repo=CodingKitten-YT/KittenStore)](https://github.com/CodingKitten-YT/KittenStore/graphs/contributors)
+<a href="https://github.com/CodingKitten-YT/KittenStore/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=CodingKitten-YT/KittenStore" />
+</a>
 
 ## License
 
