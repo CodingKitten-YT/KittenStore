@@ -1,4 +1,4 @@
-# <center><img style="width: 2rem;margin-top: 200px;border-radius: 5px;" src="https://raw.githubusercontent.com/CodingKitten-YT/KittenStore/main/250icon.png"></center> KittenStore
+# <center><img style="width: 2rem;margin-top: 200px;border-radius: 5px;" src="https://raw.githubusercontent.com/CodingKitten-YT/KittenStore/main/assets/img/250icon.png"></center> KittenStore
 
 Welcome to **KittenStore**!
 
