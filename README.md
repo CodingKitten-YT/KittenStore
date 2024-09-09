@@ -35,6 +35,8 @@ Thank you to all the people who have contributed to KittenStore:
   <img src="https://contrib.rocks/image?repo=CodingKitten-YT/KittenStore" />
 </a>
 
+If you want to contribute please follow [Contributing Guide](CONTRIBUTING.md)
+
 ## License
 ![GNU GPL](https://www.gnu.org/graphics/gplv3-with-text-136x68.png)
 <br>
