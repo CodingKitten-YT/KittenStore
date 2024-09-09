@@ -37,6 +37,7 @@ Thank you to all the people who have contributed to KittenStore:
 
 ## License
 ![GNU GPL](https://www.gnu.org/graphics/gplv3-with-text-136x68.png)
+<br>
 KittenStore is licensed under the [GNU License](LICENSE).
 
 ## Contact
