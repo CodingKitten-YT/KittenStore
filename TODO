@@ -1,8 +1,19 @@
-# Stuff todo
+# Stuff TODO
 
-- ReadME DONE
-- Round the icon as well
-- maybe add a shadow to the icon 
-- format + split js into files
-- Dark Mode DONE
-- Initial app onboarding DONE
+Stuff that we need to do.
+
+## Key
+
+Ip - In Progress
+D - DONE
+P - Pending
+C - Can't Solve
+
+| Feature | Status |
+| ------- | ------ |
+| ReadME  | IP     |
+| Add Shadow to Icon  | P |
+| Dark Mode  | IP |
+| Mobile App onboarding  | D |
+| Cleanup/Split files  | P |
+| Put more here by creating a issue  | P |

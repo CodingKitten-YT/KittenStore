@@ -3,7 +3,7 @@
 
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <title>KittenStore</title>
 
   <!-- Onsen UI CSS -->
@@ -59,6 +59,8 @@
       }
     });
   </script>
+
+
 </head>
 
 <body>
@@ -116,9 +118,9 @@
       </ons-toolbar>
       <ons-tabbar swipeable id="appTabbar" position="auto">
         <ons-tab label="Home" icon="md-home" page="home.html" active></ons-tab>
+        <ons-tab label="Repositories" icon="md-folder" page="repos.html"></ons-tab>
         <ons-tab label="Info" icon="md-info" page="info.html"></ons-tab>
         <ons-tab label="Settings" icon="md-settings" page="settings.html"></ons-tab>
-        <ons-tab label="Repositories" icon="md-folder" page="repos.html"></ons-tab> <!-- New Tab -->
       </ons-tabbar>
       <script>
         ons.getScriptPage().addEventListener('prechange', function (event) {
@@ -261,25 +263,38 @@
           <!-- Text on the left -->
           <div class="col-md-8">
             <p class="limited-width">
-              Please ensure you have URL Scheme enabled when trying to install apps with TrollStore. It is under the security section in your TrollStore app.
+              Please ensure you have URL Scheme enabled when trying to install apps with TrollStore. It is under the
+              security section in your TrollStore app.
             </p>
           </div>
-          
+
           <!-- Image on the right -->
           <div class="col-md-4 text-center">
             <img src="assets/img/URL_scheme_Troll.jpeg" alt="Screenshot" class="img-fluid centered-image">
           </div>
         </div>
       </div>
-      
+
       <br>
       <div class="credits-list">
         <div class="credits-header">
           <p class="intro">Disclaimer:</p>
         </div>
-        <p class="limited-width">I did not make any of these apps and i am not responsible for any use of them. I do not
-          host any of these ipa files, this project is just for displaying them kinda like a search engine. I do not
-          endorce piracy. If you have any complaints please contact me on discord: codingkitten</p>
+        <p class="limited-width">
+
+          This project serves as an indexing and display platform for iOS application files (IPAs). The creator of this project:
+          <br>
+          <ol>
+            <li>Does not develop, produce, or maintain any of the applications listed.</li>
+            <li>Does not host or store any IPA files.</li>
+            <li>Is not responsible for the use, misuse, or consequences of using any listed applications.</li>
+            <li>Does not endorse or encourage software piracy or any illegal activities.</li>
+          </ol>
+          This platform functions solely as a search and display tool, similar to a search engine, for existing IPA files.
+          <br>
+          For any concerns, inquiries, or removal requests, please contact the project maintainer via Discord: CodingKitten
+          <br>
+          Note: This disclaimer is subject to change and does not constitute legal advice.</p>
         <div class="credits-header">
           <p class="intro">Emoji Guide for App Selection (Status):</p>
         </div>
@@ -298,7 +313,7 @@
           tweaks from this repository. Please consider the provided emoji guidance when choosing the right application
           for your needs.</p>
       </div>
-      <p class="limited-width">V1.05</p>
+      <p id="version" class="text-center">Loading version...</p>
     </ons-page>
   </template>
 

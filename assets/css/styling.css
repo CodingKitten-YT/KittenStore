@@ -3,7 +3,7 @@
   --primary-color: #6200EE;
   --secondary-color: #03DAC6;
   --accent-color: #FF5722;
-  --background-color: #F5F5F5;
+  --background-color: #fff;
   --card-color: #fff;
   --text-color: #333;
   --tabbar-background-color: #fff;
@@ -16,6 +16,8 @@ body {
   background-color: var(--background-color);
   color: var(--text-color);
 }
+
+
 
 .search-bar-wrapper {
   display: flex;
@@ -184,9 +186,11 @@ body {
 
 .limited-width {
   max-width: 80%;
-  margin: 0 auto;
-  text-align: center;
+left: 20%;
+  text-align: left;
 }
+
+
 
 .centered-image {
   display: block;
@@ -398,4 +402,19 @@ body {
   border-radius: 5px;
   padding: 2px;
   color: white;
+}
+
+body.ios-standalone .tab-bar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding-bottom: 20px; /* Adjust this value based on testing */
+  background-color: #fff;
+  z-index: 1000;
+}
+
+
+ons-tabbar {
+  bottom: env(safe-area-inset-bottom);
 }
