@@ -4,7 +4,6 @@ function addCustomRepo(url) {
 		customRepos.push(url);
 		localStorage.setItem("customRepos", JSON.stringify(customRepos));
 		console.log(`Added custom repo: ${url}`);
-		fetchAndDisplayCustomRepos();
 		reloadApps();
 	}
 }
@@ -15,7 +14,7 @@ function removeCustomRepo(url) {
 		customRepos = customRepos.filter((repo) => repo !== url);
 		localStorage.setItem("customRepos", JSON.stringify(customRepos));
 		console.log(`Removed custom repo: ${url}`);
-		fetchAndDisplayCustomRepos();
+		fetchAndDisplayCustomRepos(); 
 		reloadApps();
 	}
 }
@@ -30,35 +29,56 @@ function reloadApps() {
 document.addEventListener("init", async (event) => {
 	const page = event.target;
 
-	// Fetch and display custom repos on page load
-	fetchAndDisplayCustomRepos();
+	
+	if (!page.customReposInitialized) {
+		fetchAndDisplayCustomRepos(); 
+		page.customReposInitialized = true; 
+	}
 
-	// Add event listener for the add repo button
-	document
-		.getElementById("add-repo-btn")
-		.addEventListener("click", async () => {
+	
+	const addRepoButton = document.getElementById("add-repo-btn");
+	if (addRepoButton && !addRepoButton.listenerAdded) {
+		addRepoButton.addEventListener("click", async () => {
 			const repoUrl = document.getElementById("repo-url-input").value.trim();
 			if (repoUrl) {
 				addCustomRepo(repoUrl);
-				fetchAndDisplayCustomRepos(); // Refresh the repo list after adding
+				
+				fetchAndDisplayCustomRepos(); 
 			}
 		});
+		addRepoButton.listenerAdded = true; 
+	}
 });
 
-function fetchAndDisplayCustomRepos() {
+async function fetchAndDisplayCustomRepos() {
 	const repoList = document.getElementById("repo-list");
 	const customRepos = JSON.parse(localStorage.getItem("customRepos")) || [];
 	repoList.innerHTML = "";
 
 	for (let i = 0; i < customRepos.length; i++) {
-		const repo = customRepos[i];
+		const repoUrl = customRepos[i];
+
+		
+		let repoName = repoUrl;
+		try {
+			const response = await fetch(repoUrl);
+			if (response.ok) {
+				const repoData = await response.json();
+				repoName = repoData.name || repoUrl; 
+			}
+		} catch (error) {
+			console.error(`Error fetching repo metadata: ${error}`);
+		}
+
+		
 		const repoItem = document.createElement("ons-list-item");
 		repoItem.innerHTML = `
-        <span>${repo}</span>
-        <div class="right">
-          <ons-button modifier="quiet" onclick="removeCustomRepo('${repo}')">Remove</ons-button>
-        </div>
-      `;
+            <span>${repoName}</span>
+            <div class="right">
+              <ons-button modifier="quiet" onclick="removeCustomRepo('${repoUrl}')">Remove</ons-button>
+            </div>
+        `;
+		repoItem.setAttribute("title", repoUrl); 
 		repoList.appendChild(repoItem);
 	}
 }
@@ -69,6 +89,6 @@ function addCustomRepoFromInput() {
 	if (repoUrl) {
 		addCustomRepo(repoUrl);
 		repoInput.value = "";
-		displayCustomRepos();
+		fetchAndDisplayCustomRepos();
 	}
 }
