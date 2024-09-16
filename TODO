@@ -12,7 +12,10 @@ C - Can't Solve
 | Feature | Status |
 | ------- | ------ |
 | ReadME  | IP     |
-| Add Shadow to Icon  | P |
+| Add Shadow to Icon  | D |
+| Add Esign button  | P |
+| Add Scarlet button  | P |
+| Add Feather button  | P |
 | Dark Mode  | IP |
 | Mobile App onboarding  | D |
 | Cleanup/Split files  | P |
