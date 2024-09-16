@@ -190,7 +190,10 @@ left: 20%;
   text-align: left;
 }
 
-
+.bs-table{
+  background: var(--background-color) !important;
+  color: var(--text-color) !important;
+}
 
 .centered-image {
   display: block;
