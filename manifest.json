@@ -3,7 +3,7 @@
 	"short_name": "KittenStore",
 	"start_url": "/",
 	"display": "standalone",
-	"theme_color": "#ef4e2a",
+	"theme_color": "#fff",
 	"background_color": "#fff",
 	"icons": [
 		{

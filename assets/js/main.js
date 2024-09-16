@@ -34,3 +34,27 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('the-site-uri').textContent = window.location.href;
 }
 );
+
+  
+
+
+
+  
+ // Function to fetch the version
+ async function fetchVersion() {
+    try {
+      const response = await fetch('/version');
+      if (response.ok) {
+        const versionText = await response.text(); // Assuming the response is plain text
+        document.getElementById('version').textContent = versionText;
+      } else {
+        document.getElementById('version').textContent = 'Failed to fetch version';
+      }
+    } catch (error) {
+      document.getElementById('version').textContent = 'Error fetching version';
+      console.error('Error:', error);
+    }
+  }
+
+  // Fetch version on page load
+  window.onload = fetchVersion;

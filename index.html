@@ -3,7 +3,7 @@
 
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <title>KittenStore</title>
 
   <!-- Onsen UI CSS -->
@@ -33,7 +33,7 @@
   <link rel="manifest" href="/manifest.json">
 
   <!-- Favicon -->
-  <link rel="icon" type="image/png" href="assets/img/250icon.png" />
+  <link rel="icon" type="image/png" href="assets/img/500icon-rounded.png" />
 
   <!-- Onsen UI JS -->
   <script src="https://cdn.jsdelivr.net/npm/onsenui/js/onsenui.min.js"></script>
@@ -59,6 +59,8 @@
       }
     });
   </script>
+
+
 </head>
 
 <body>
@@ -70,7 +72,7 @@
       <img style="max-width: 70px; border-radius: 10px;" src="assets/img/250icon.png" alt="">
       <br><br>
       <p class="h5 fw-bold mb-3">Welcome to KittenStore</p>
-      <p class="text-muted mb-4">A modern ipa library viewer and downloader.
+      <p class="text-muted mb-4">A modern IPA library viewer and downloader.
       </p>
       <button onclick="ShowPopup2()" class="btn btn-primary px-4 py-2">Get Started</button>
     </div>
@@ -116,9 +118,9 @@
       </ons-toolbar>
       <ons-tabbar swipeable id="appTabbar" position="auto">
         <ons-tab label="Home" icon="md-home" page="home.html" active></ons-tab>
+        <ons-tab label="Repositories" icon="md-folder" page="repos.html"></ons-tab>
         <ons-tab label="Info" icon="md-info" page="info.html"></ons-tab>
         <ons-tab label="Settings" icon="md-settings" page="settings.html"></ons-tab>
-        <ons-tab label="Repositories" icon="md-folder" page="repos.html"></ons-tab> <!-- New Tab -->
       </ons-tabbar>
       <script>
         ons.getScriptPage().addEventListener('prechange', function (event) {
@@ -253,52 +255,102 @@
   <!-- Info/About Tab -->
   <template id="info.html">
     <ons-page>
+      <br>
+      <div class="text-center">
+        <img style="width: 10vw;" src="assets/img/500icon-rounded.png" alt="logo">
+        <h1>Welcome to KittenStore</h1>
+        <p class="w-50 text-start m-auto">KittenStore is a user-friendly frontend designed for viewing and installing IPA files. I developed KittenStore to address the often frustrating and convoluted process of finding reliable IPA files. With so many distracting Linkvertise links and intrusive ads cluttering the search experience, KittenStore aims to streamline this process and provide a clean, straightforward interface for users to easily access and install the IPA files they need.</p>
+      </div><br>
+      <hr><br>
       <div class="credits-header">
         <p class="intro">Troubleshooting:</p>
       </div>
-      <div class="container">
+      <div class="container w-100 limited-width">
         <div class="row align-items-center">
           <!-- Text on the left -->
-          <div class="col-md-8">
+          <div class="col-md-5">
             <p class="limited-width">
-              Please ensure you have URL Scheme enabled when trying to install apps with TrollStore. It is under the security section in your TrollStore app.
+              Please ensure you have URL Scheme enabled when trying to install apps with TrollStore. It is under the
+              security section in your TrollStore app.
             </p>
           </div>
-          
+
           <!-- Image on the right -->
-          <div class="col-md-4 text-center">
+          <div class="col-md-7 text-center">
             <img src="assets/img/URL_scheme_Troll.jpeg" alt="Screenshot" class="img-fluid centered-image">
           </div>
         </div>
       </div>
-      
+
       <br>
       <div class="credits-list">
         <div class="credits-header">
           <p class="intro">Disclaimer:</p>
         </div>
-        <p class="limited-width">I did not make any of these apps and i am not responsible for any use of them. I do not
-          host any of these ipa files, this project is just for displaying them kinda like a search engine. I do not
-          endorce piracy. If you have any complaints please contact me on discord: codingkitten</p>
+        <p class="limited-width">
+
+          This project serves as an indexing and display platform for iOS application files (IPAs). The creator of this project:
+          <br>
+          <ol>
+            <li>Does not develop, produce, or maintain any of the applications listed.</li>
+            <li>Does not host or store any IPA files.</li>
+            <li>Is not responsible for the use, misuse, or consequences of using any listed applications.</li>
+            <li>Does not endorse or encourage software piracy or any illegal activities.</li>
+          </ol>
+          This platform functions solely as a search and display tool, similar to a search engine, for existing IPA files.
+          <br>
+          For any concerns, inquiries, or removal requests, please contact the project maintainer via Discord: CodingKitten
+          <br>
+          Note: This disclaimer is subject to change and does not constitute legal advice.</p>
         <div class="credits-header">
           <p class="intro">Emoji Guide for App Selection (Status):</p>
         </div>
-        <p class="limited-width">
-          ✅ Indicates that an app is working or up-to-date.<br>
-          ❌ Indicates that an app is either discontinued or not working.<br>
-          ⚠️ Indicates that an app is outdated but still functional.<br>
-          ❔ Indicates that the app's original source is inaccessible or has not been tested and its functionality is
-          uncertain.<br>
-          👍 Indicates that an app or tweak is considered better than another one from the repo. (Example: Paperback >
-          Aidoku)<br>
-          ⭐ Indicates that an app fully supports Widgets.<br>
-          💡 Indicates that an app contains a hand-made tutorial. (Linked in its description)<br>
-        </p>
+        <div class="bs-table mt-6">
+          <table class="bs-table table table-striped">
+            <thead>
+              <tr class="bs-table">
+                <th class="bs-table">Indicator</th>
+                <th class="bs-table">Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="bs-table">✅</td>
+                <td class="bs-table">An app is working or up-to-date.</td>
+              </tr>
+              <tr>
+                <td class="bs-table">❌</td>
+                <td class="bs-table">An app is either discontinued or not working.</td>
+              </tr>
+              <tr>
+                <td class="bs-table">⚠️</td>
+                <td class="bs-table">An app is outdated but still functional.</td>
+              </tr>
+              <tr>
+                <td class="bs-table">❔</td>
+                <td class="bs-table">The app's original source is inaccessible or has not been tested and its functionality is uncertain.</td>
+              </tr>
+              <tr>
+                <td class="bs-table">👍</td>
+                <td class="bs-table">An app or tweak is considered better than another one from the repo. (Example: Paperback &gt; Aidoku)</td>
+              </tr>
+              <tr>
+                <td class="bs-table">⭐</td>
+                <td class="bs-table">An app fully supports Widgets.</td>
+              </tr>
+              <tr>
+                <td class="bs-table">💡</td>
+                <td class="bs-table">An app contains a hand-made tutorial. (Linked in its description)</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        
         <p class="limited-width">These emojis should assist you in making informed decisions when selecting apps or
           tweaks from this repository. Please consider the provided emoji guidance when choosing the right application
           for your needs.</p>
       </div>
-      <p class="limited-width">V1.05</p>
+      <p id="version" class="text-center">Loading version...</p>
     </ons-page>
   </template>
 
