@@ -1,4 +1,4 @@
-https://raw.githubusercontent.com/CodingKitten-YT/Apptesters-Altstore/refs/heads/main/output.json
+https://repo.kittendev.xyz/output.json
 https://quarksources.github.io/quantumsource.json
 https://quarksources.github.io/quantumsource++.json
 https://flyinghead.github.io/flycast-builds/altstore.json
