@@ -372,6 +372,8 @@
         <div class="install-buttons">
           <ons-button id="trollstore-install" aria-label="Install with TrollStore">Install with TrollStore</ons-button>
           <ons-button id="sidestore-install" aria-label="Install with SideStore">Install with SideStore</ons-button>
+          <ons-button id="scarlet-install" aria-label="Install with Scarlet">Install with Scarlet</ons-button>
+          <ons-button id="esign-install" aria-label="Install with Esign">Install with Esign</ons-button>
           <ons-button id="appdb-search" aria-label="Search on AppDB">Search on AppDB</ons-button>
           <ons-button id="ipa-download" aria-label="Download IPA">Download IPA</ons-button>
         </div>
@@ -431,6 +433,11 @@
               page.querySelector('#sidestore-install').onclick = function () {
                 const sideStoreURL = `sidestore://source?url=${encodeURIComponent(latestVersion.downloadURL)}`;
                 location.href = sideStoreURL;
+              };
+
+              page.querySelector('#scarlet-install').onclick = function () {
+                const appdbURL = `https://appdb.to/?name=${encodeURIComponent(app.name)}`;
+                window.open(appdbURL, '_blank');
               };
 
               page.querySelector('#appdb-search').onclick = function () {
