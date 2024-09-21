@@ -3,7 +3,7 @@
   --primary-color: #6200EE;
   --secondary-color: #03DAC6;
   --accent-color: #FF5722;
-  --background-color: #fff;
+  --background-color: #F5F5F5;
   --card-color: #fff;
   --text-color: #333;
   --tabbar-background-color: #fff;
@@ -16,8 +16,6 @@ body {
   background-color: var(--background-color);
   color: var(--text-color);
 }
-
-
 
 .search-bar-wrapper {
   display: flex;
@@ -32,7 +30,7 @@ body {
   border: none;
   padding: 10px 15px;
   font-size: 16px;
-  background-color: #fff;
+  background-color: var(--background-color);
   box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
 
@@ -186,13 +184,8 @@ body {
 
 .limited-width {
   max-width: 80%;
-left: 20%;
-  text-align: left;
-}
-
-.bs-table{
-  background: var(--background-color) !important;
-  color: var(--text-color) !important;
+  margin: 0 auto;
+  text-align: center;
 }
 
 .centered-image {
@@ -398,26 +391,9 @@ left: 20%;
 
 
 
-
-
 #the-site-uri{
   background-color: rgb(46, 46, 46);
   border-radius: 5px;
   padding: 2px;
   color: white;
-}
-
-body.ios-standalone .tab-bar {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  padding-bottom: 20px; /* Adjust this value based on testing */
-  background-color: #fff;
-  z-index: 1000;
-}
-
-
-ons-tabbar {
-  bottom: env(safe-area-inset-bottom);
 }
