@@ -437,17 +437,17 @@
               };
 
               page.querySelector('#scarlet-install').onclick = function () {
-                const appdbURL = `scarlet://install=${encodeURIComponent(app.name)}`;
+                const appdbURL = `scarlet://install=${encodeURIComponent(latestVersion.downloadURL)}`;
                 window.open(appdbURL, '_blank');
               };
 
               page.querySelector('#esign-install').onclick = function () {
-                const appdbURL = `itms-services://?action=download-manifest&amp;url=${encodeURIComponent(app.name)}`;
+                const appdbURL = `itms-services://?action=download-manifest&amp;url=${encodeURIComponent(latestVersion.downloadURL)}`;
                 window.open(appdbURL, '_blank');
               };
 
               page.querySelector('#altstore-install').onclick = function () {
-                const appdbURL = `altstore://install?url=${encodeURIComponent(app.name)}`;
+                const appdbURL = `altstore://install?url=${encodeURIComponent(latestVersion.downloadURL)}`;
                 window.open(appdbURL, '_blank');
               };
 
@@ -493,14 +493,23 @@
           const showTrollStore = localStorage.getItem('showTrollStore') !== 'false';
           const showSideStore = localStorage.getItem('showSideStore') !== 'false';
           const showAppDB = localStorage.getItem('showAppDB') !== 'false';
+          const showAltStore = localStorage.getItem('showAltStore') !== 'false';
+          const showEsign = localStorage.getItem('showEsign') !== 'false';
+          const showScarlet = localStorage.getItem('showScarlet') !== 'false';
 
           const trollstoreButton = document.getElementById('trollstore-install');
           const sidestoreButton = document.getElementById('sidestore-install');
           const appdbButton = document.getElementById('appdb-search');
+          const altstoreButton = document.getElementById('altstore-install');
+          const esignButton = document.getElementById('esign-install');
+          const scarletButton = document.getElementById('scarlet-install');
 
           if (trollstoreButton) trollstoreButton.style.display = showTrollStore ? 'inline-block' : 'none';
           if (sidestoreButton) sidestoreButton.style.display = showSideStore ? 'inline-block' : 'none';
           if (appdbButton) appdbButton.style.display = showAppDB ? 'inline-block' : 'none';
+          if (altstoreButton) altstoreButton.style.display = showAltStore ? 'inline-block' : 'none';
+          if (esignButton) esignButton.style.display = showEsign ? 'inline-block' : 'none';
+          if (scarletButton) scarletButton.style.display = showScarlet ? 'inline-block' : 'none';
         }
 
         function makeLinksClickable(text) {
@@ -509,7 +518,6 @@
       </script>
     </ons-page>
   </template>
-
 
   <!-- Settings Tab -->
   <template id="settings.html">
@@ -547,6 +555,30 @@
           </ons-list-item>
           <ons-list-item>
             <div class="center">
+              <span class="list-item__title">Show AltStore Button</span>
+            </div>
+            <div class="right">
+              <ons-switch id="altstore-switch"></ons-switch>
+            </div>
+          </ons-list-item>
+          <ons-list-item>
+            <div class="center">
+              <span class="list-item__title">Show Esign Button</span>
+            </div>
+            <div class="right">
+              <ons-switch id="esign-switch"></ons-switch>
+            </div>
+          </ons-list-item>
+          <ons-list-item>
+            <div class="center">
+              <span class="list-item__title">Show Scarlet Button</span>
+            </div>
+            <div class="right">
+              <ons-switch id="scarlet-switch"></ons-switch>
+            </div>
+          </ons-list-item>
+          <ons-list-item>
+            <div class="center">
               <span class="list-item__title">Preferences:</span>
             </div>
           </ons-list-item>
@@ -575,6 +607,9 @@
             const trollstoreSwitch = document.getElementById('trollstore-switch');
             const sidestoreSwitch = document.getElementById('sidestore-switch');
             const appdbSwitch = document.getElementById('appdb-switch');
+            const altstoreSwitch = document.getElementById('altstore-switch');
+            const esignSwitch = document.getElementById('esign-switch');
+            const scarletSwitch = document.getElementById('scarlet-switch');
             const iphonexPatchSwitch = document.getElementById('iphonex-patch-switch');
             const darkModeSwitch = document.getElementById('dark-mode-switch');
 
@@ -582,12 +617,18 @@
             if (localStorage.getItem('showTrollStore') === null) localStorage.setItem('showTrollStore', 'true');
             if (localStorage.getItem('showSideStore') === null) localStorage.setItem('showSideStore', 'true');
             if (localStorage.getItem('showAppDB') === null) localStorage.setItem('showAppDB', 'true');
+            if (localStorage.getItem('showAltStore') === null) localStorage.setItem('showAltStore', 'true');
+            if (localStorage.getItem('showEsign') === null) localStorage.setItem('showEsign', 'true');
+            if (localStorage.getItem('showScarlet') === null) localStorage.setItem('showScarlet', 'true');
             if (localStorage.getItem('iphonexPatch') === null) localStorage.setItem('iphonexPatch', 'false');
             if (localStorage.getItem('darkMode') === null) localStorage.setItem('darkMode', 'false');
 
             trollstoreSwitch.checked = localStorage.getItem('showTrollStore') === 'true';
             sidestoreSwitch.checked = localStorage.getItem('showSideStore') === 'true';
             appdbSwitch.checked = localStorage.getItem('showAppDB') === 'true';
+            altstoreSwitch.checked = localStorage.getItem('showAltStore') === 'true';
+            esignSwitch.checked = localStorage.getItem('showEsign') === 'true';
+            scarletSwitch.checked = localStorage.getItem('showScarlet') === 'true';
             iphonexPatchSwitch.checked = localStorage.getItem('iphonexPatch') === 'true';
             darkModeSwitch.checked = localStorage.getItem('darkMode') === 'true';
 
@@ -601,6 +642,18 @@
             });
             appdbSwitch.addEventListener('change', function () {
               localStorage.setItem('showAppDB', this.checked);
+              updateInstallButtons();
+            });
+            altstoreSwitch.addEventListener('change', function () {
+              localStorage.setItem('showAltStore', this.checked);
+              updateInstallButtons();
+            });
+            esignSwitch.addEventListener('change', function () {
+              localStorage.setItem('showEsign', this.checked);
+              updateInstallButtons();
+            });
+            scarletSwitch.addEventListener('change', function () {
+              localStorage.setItem('showScarlet', this.checked);
               updateInstallButtons();
             });
             iphonexPatchSwitch.addEventListener('change', function () {
@@ -638,19 +691,27 @@
           }
         }
 
-
         function updateInstallButtons() {
           const showTrollStore = localStorage.getItem('showTrollStore') !== 'false';
           const showSideStore = localStorage.getItem('showSideStore') !== 'false';
           const showAppDB = localStorage.getItem('showAppDB') !== 'false';
+          const showAltStore = localStorage.getItem('showAltStore') !== 'false';
+          const showEsign = localStorage.getItem('showEsign') !== 'false';
+          const showScarlet = localStorage.getItem('showScarlet') !== 'false';
 
           const trollstoreButton = document.getElementById('trollstore-install');
           const sidestoreButton = document.getElementById('sidestore-install');
           const appdbButton = document.getElementById('appdb-search');
+          const altstoreButton = document.getElementById('altstore-install');
+          const esignButton = document.getElementById('esign-install');
+          const scarletButton = document.getElementById('scarlet-install');
 
           if (trollstoreButton) trollstoreButton.style.display = showTrollStore ? 'inline-block' : 'none';
           if (sidestoreButton) sidestoreButton.style.display = showSideStore ? 'inline-block' : 'none';
           if (appdbButton) appdbButton.style.display = showAppDB ? 'inline-block' : 'none';
+          if (altstoreButton) altstoreButton.style.display = showAltStore ? 'inline-block' : 'none';
+          if (esignButton) esignButton.style.display = showEsign ? 'inline-block' : 'none';
+          if (scarletButton) scarletButton.style.display = showScarlet ? 'inline-block' : 'none';
         }
 
         function makeLinksClickable(text) {
@@ -680,8 +741,6 @@
       </script>
     </ons-page>
   </template>
-
-
 
   <!-- Custom Repos Tab -->
   <template id="repos.html">
