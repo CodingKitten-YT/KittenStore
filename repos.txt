@@ -1,4 +1,5 @@
 https://corsproxy.io/?http%3A%2F%2Frepo.kittendev.xyz%2Fapps.json
+https://corsproxy.io/?http%3A%2F%2Frepo.kittendev.xyz%2Fcypwn.json
 https://quarksources.github.io/quantumsource.json
 https://quarksources.github.io/quantumsource++.json
 https://flyinghead.github.io/flycast-builds/altstore.json
